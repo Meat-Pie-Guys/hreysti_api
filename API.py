@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import uuid
 
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = '>kz9q>GnW<>~_.7,8cw_-/xA'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db\\fenrir.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -33,7 +33,8 @@ class User(db.Model):
     user_role = db.Column(db.String(12), primary_key=False, nullable=False)
     start_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
     expire_date = db.Column(db.DateTime, nullable=True)
-    workouts = db.relationship('Workout', secondary=participates, lazy='subquery')
+    workouts = db.relationship('Workout', secondary=participates, lazy='dynamic',
+                               backref=db.backref('workouts', lazy='dynamic'))
 
 
 class Workout(db.Model):
@@ -41,7 +42,6 @@ class Workout(db.Model):
     coach_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     date_time = db.Column(db.DateTime(), unique=True, nullable=False)
     description_id = db.Column(db.Integer, db.ForeignKey('description.id'), primary_key=False, nullable=False)
-    users = db.relationship('User', secondary=participates, lazy='subquery')
 
 
 class Description(db.Model):
@@ -58,7 +58,6 @@ class Exercises(db.Model):
 ##########
 # ROUTES #
 ##########
-
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -71,7 +70,6 @@ def token_required(f):
             return f(curr_user, *args, **kwargs)
         except jwt.DecodeError:
             return jsonify({'message': 'invalid token'}), 404
-
     return decorated
 
 
@@ -93,7 +91,8 @@ def login():
 ################
 
 @app.route('/users', methods=['GET'])
-def get_all_users():
+@token_required
+def get_all_users(curr_user):
     lis = []
     all_users = User.query.all()
     for user in all_users:
@@ -110,7 +109,8 @@ def get_all_users():
 
 
 @app.route('/user/<int:id>/', methods=['GET'])
-def get_user(id):
+@token_required
+def get_user(curr_user, id):
     user_got = User.query.filter_by(id=id).first_or_404()
     return jsonify(
         {
@@ -128,7 +128,8 @@ def get_user(id):
 
 
 @app.route('/user/coach/', methods=['GET'])
-def get_coaches():
+@token_required
+def get_coaches(curr_user):
     lis = []
     all_users = User.query.all()
     for user in all_users:
@@ -146,7 +147,8 @@ def get_coaches():
 
 
 @app.route('/user/clients/', methods=['GET'])
-def get_clients():
+@token_required
+def get_clients(curr_user):
     lis = []
     all_users = User.query.all()
     for user in all_users:
@@ -164,7 +166,8 @@ def get_clients():
 
 
 @app.route('/user', methods=['POST'])
-def create_user():
+@token_required
+def create_user(curr_user):
     data = request.get_json()
     if 'name' not in data or 'password' not in data:
         return jsonify({'message': 'missing header fields'}), 404
@@ -183,11 +186,40 @@ def create_user():
     return jsonify({'message': 'success'})
 
 
+@app.route('/delete/user/<int:id>/', methods=['GET'])
+@token_required
+def remove_user(curr_user, id):
+    user_gone = User.query.get_or_404(id)
+    db.session.delete(user_gone)
+    db.session.commit()
+    return jsonify({'message': 'success'})
+
+
+@app.route('/update/user/<int:id>', methods=['GET', 'POST'])
+@token_required
+def update_user(curr_user, id):
+    data = request.get_json()
+    curr_user = User.query.get_or_404(id)
+    if 'name' in data:
+        curr_user.name = data['name']
+    if 'user_role' in data:
+        curr_user.user_role = data['user_role']
+    if 'password' in data:
+        if len(data['password']) < 4:
+            return jsonify({'message': 'password must be at least 4 characters'}), 404
+        else:
+            curr_user.password = generate_password_hash(data['password'], method='sha256')
+    if 'expire_date' in data:
+        curr_user.expire_date = data['expire_date']
+    return jsonify({'message': 'success'})
+
+
 ###################
 # WORKOUT QUERIES #
 ###################
 @app.route('/workout', methods=['GET'])
-def all_workouts():
+@token_required
+def all_workouts(curr_user):
     lis = []
     all_work = Workout.query.all()
     descript = Description.query.all()
@@ -206,7 +238,8 @@ def all_workouts():
 
 
 @app.route('/workout/coach/<int:id>/', methods=['GET'])
-def coach_workouts(id):
+@token_required
+def coach_workouts(curr_user, id):
     workouts = Workout.query.all()
     lis = []
     descript = Description.query.all()
@@ -226,7 +259,8 @@ def coach_workouts(id):
 
 
 @app.route('/workout/<int:id>/', methods=['GET'])
-def get_workout(id):
+@token_required
+def get_workout(curr_user, id):
     workout_got = Workout.query.filter_by(id=id).first_or_404()
     return jsonify(
         {
@@ -241,7 +275,8 @@ def get_workout(id):
 
 
 @app.route('/workout', methods=['POST'])
-def create_workout():
+@token_required
+def create_workout(curr_user):
     data = request.get_json()
     if 'coach_id' not in data or 'description_id' not in data:
         return jsonify({'message': 'missing header fields'}), 404
@@ -256,7 +291,8 @@ def create_workout():
 
 
 @app.route('/description', methods=['POST'])
-def create_description():
+@token_required
+def create_description(curr_user):
     data = request.get_json()
     if 'text' not in data or 'type' not in data:
         return jsonify({'message': 'missing header fields'}), 404
@@ -273,5 +309,5 @@ def create_description():
 # Runner #
 ##########
 if __name__ == '__main__':
-    db.create_all()
+    #db.create_all()
     app.run()

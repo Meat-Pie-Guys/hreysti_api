@@ -1,4 +1,5 @@
-import datetime
+from _datetime import datetime
+import time
 import uuid
 import jwt
 from flask import Flask, jsonify, request
@@ -54,9 +55,6 @@ class Exercises(db.Model):
     name = db.Column(db.String(50), primary_key=False, nullable=False)
 
 
-##########
-# ROUTES #
-##########
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -85,10 +83,6 @@ def login():
     return jsonify({'token': token.decode('UTF-8')})
 
 
-################
-# USER_QUERIES #
-################
-
 @app.route('/users', methods=['GET'])
 def get_all_users():
     lis = []
@@ -109,6 +103,24 @@ def get_all_users():
 @app.route('/user/<int:id>', methods=['GET'])
 def get_user(id):
     user_got = User.query.filter_by(id=id).first()
+    return jsonify(
+        {
+            'User': [
+                {
+                    'id': user_got.id,
+                    'name': user_got.name,
+                    'open_id': user_got.open_id,
+                    'user_role': user_got.user_role,
+                    'password': user_got.password,
+                    'start_date': user_got.start_date,
+                    'expire_date': user_got.expire_date
+                }
+            ]})
+
+
+@app.route('/user/<string:username>', methods=['GET'])
+def get_user(username):
+    user_got = User.query.filter_by(name=username).first()
     return jsonify(
         {
             'User': [
@@ -258,7 +270,7 @@ def get_workout(id):
             ]})
 
 
-@app.route('/workout', methods=['POST'])
+@app.route('/s', methods=['POST'])
 def create_workout():
     data = request.get_json()
     if 'coach_id' not in data or 'description_id' not in data:
@@ -287,9 +299,23 @@ def create_description(curr_user):
     return jsonify({'message': 'success'})
 
 
-##########
-# Runner #
-##########
+@app.route('/workout/today', methods=['GET'])
+def get_workout_by_date():
+    currentdate = datetime.datetime.today()
+    print(currentdate)
+    all_work = Workout.query.all()
+    lis = []
+    for workout in all_work:
+        print(workout.date_time.date())
+        if workout.date_time.date() == currentdate:
+            dictionary = {}
+            dictionary['id'] = workout.id
+            dictionary['coach_id'] = workout.coach_id
+            dictionary['description_id'] = workout.description_id
+            dictionary['date_time'] = workout.date_time
+            lis.append(dictionary)
+    return jsonify({'all_workouts': lis})
+
 if __name__ == '__main__':
-    #db.create_all()
+    db.create_all()
     app.run()

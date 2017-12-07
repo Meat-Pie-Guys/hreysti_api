@@ -57,49 +57,56 @@ def token_required(f):
             curr_user = User.query.filter_by(open_id=data['open_id']).first()
             if curr_user:
                 return f(curr_user, *args, **kwargs)
-            return jsonify({'error': 2}), 404
+            return jsonify({'error': 1}), 404
         except jwt.DecodeError:
-            return jsonify({'error': 3}), 404  # TODO REPLACE ERROR CODE
+            return jsonify({'error': 1}), 404  # TODO REPLACE ERROR CODE
     return decorated
 
 @app.route('/user', methods=['POST'])
 def create_user():
     data = request.get_json()
     if 'name' not in data or 'password' not in data or 'ssn' not in data:
-        return jsonify({'error': 1}), 404
+        return jsonify({'error': 1}), 404  # TODO REPLACE ERROR CODE
     name = data['name']
     pw = data['password']
     ssn = data['ssn']
     if len(name) == 0 or len(pw) == 0 or len(ssn) == 0:
-        return jsonify({'error': 4}), 404
+        return jsonify({'error': 1}), 404  # TODO REPLACE ERROR CODE
     if len(pw) < 6:
-        return jsonify({'error': 5}), 404
-    if len(ssn) != 10:
-        return jsonify({'error': 5}), 404  # TODO REPLACE ERROR CODE AND WITH REGEX FOR SSN
+        return jsonify({'error': 1}), 404  # TODO REPLACE ERROR CODE
+    if len(ssn) != 10:  # TODO: REPLACE WITH SSN REGEX
+        return jsonify({'error': 1}), 404  # TODO REPLACE ERROR CODE
     if db.session.query(User.id).filter_by(ssn=ssn).scalar() is not None:
-        return jsonify({'error': 6}), 404
+        return jsonify({'error': 1}), 404  # TODO REPLACE ERROR CODE
     pw = generate_password_hash(pw, method='sha256')
-    db.session.add(User(open_id=str(uuid.uuid4()), name=name, ssn=ssn, password=pw)
+    db.session.add(User(open_id=str(uuid.uuid4()), name=name, ssn=ssn, password=pw))
     db.session.commit()
     return jsonify({'error': 0})
 
 
-if __name__ == '__main__':
-    db.create_all()
-    app.run()
-
-"""    
 @app.route('/login', methods=['GET'])
 def login():
     auth = request.authorization
     if not auth or not auth.username or not auth.password:
-        return jsonify({'e': 'missing header fields'}), 404
-    user = User.query.filter_by(name=auth.username).first()
+        return jsonify({'error': 1}), 404
+    user = User.query.filter_by(ssn=auth.username).first()
     if not user or not check_password_hash(user.password, auth.password):
-        return jsonify({'message': 'invalid credentials'})
-    expire_time = datetime.datetime.utcnow() + datetime.timedelta(weeks=5)
+        return jsonify({'error': 1}), 404
+    expire_time = datetime.datetime.utcnow() + datetime.timedelta(weeks=50)
     token = jwt.encode({'open_id': user.open_id, 'exp': expire_time}, app.config['SECRET_KEY'])
-    return jsonify({'token': token.decode('UTF-8')})
+    return jsonify({'error': 0, 'token': token.decode('UTF-8'), 'role': user.user_role})
+
+
+@app.route('/', methods=['GET'])
+@token_required
+def cock(curr_user):
+    return jsonify({'welcome': curr_user.name})
+
+
+if __name__ == '__main__':
+    app.run()
+
+"""    
 
 
 @app.route('/users', methods=['GET'])

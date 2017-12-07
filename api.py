@@ -71,13 +71,13 @@ def create_user():
     pw = data['password']
     ssn = data['ssn']
     if len(name) == 0 or len(pw) == 0 or len(ssn) == 0:
-        return jsonify({'error': 1}), 404  # TODO REPLACE ERROR CODE
+        return jsonify({'error': 1}), 405  # TODO REPLACE ERROR CODE
     if len(pw) < 6:
-        return jsonify({'error': 1}), 404  # TODO REPLACE ERROR CODE
+        return jsonify({'error': 1}), 406  # TODO REPLACE ERROR CODE
     if len(ssn) != 10:  # TODO: REPLACE WITH SSN REGEX
-        return jsonify({'error': 1}), 404  # TODO REPLACE ERROR CODE
+        return jsonify({'error': 1}), 407  # TODO REPLACE ERROR CODE
     if db.session.query(User.id).filter_by(ssn=ssn).scalar() is not None:
-        return jsonify({'error': 1}), 404  # TODO REPLACE ERROR CODE
+        return jsonify({'error': 1}), 408  # TODO REPLACE ERROR CODE
     pw = generate_password_hash(pw, method='sha256')
     db.session.add(User(open_id=str(uuid.uuid4()), name=name, ssn=ssn, password=pw))
     db.session.commit()
@@ -91,7 +91,7 @@ def login():
         return jsonify({'error': 1}), 404
     user = User.query.filter_by(ssn=auth.username).first()
     if not user or not check_password_hash(user.password, auth.password):
-        return jsonify({'error': 1}), 404
+        return jsonify({'error': 1}), 405
     expire_time = datetime.datetime.utcnow() + datetime.timedelta(weeks=50)
     token = jwt.encode({'open_id': user.open_id, 'exp': expire_time}, app.config['SECRET_KEY'])
     return jsonify({'error': 0, 'token': token.decode('UTF-8'), 'role': user.user_role})

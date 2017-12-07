@@ -97,10 +97,15 @@ def login():
     return jsonify({'error': 0, 'token': token.decode('UTF-8'), 'role': user.user_role})
 
 
-@app.route('/', methods=['GET'])
+@app.route('/user/update', methods=['PUT'])
 @token_required
-def cock(curr_user):
-    return jsonify({'welcome': curr_user.name})
+def update_user(curr_user):
+    data = request.get_json()
+    if 'name' not in data:
+        return jsonify({'error': 1})
+    curr_user.name = data['name']
+    db.session.commit()
+    return jsonify({'error': 0})
 
 
 if __name__ == '__main__':
@@ -186,24 +191,6 @@ def remove_user(id):
     user_gone = User.query.get_or_404(id)
     db.session.delete(user_gone)
     db.session.commit()
-    return jsonify({'message': 'success'})
-
-
-@app.route('/update/user/<int:id>', methods=['GET', 'POST'])
-def update_user(id):
-    data = request.get_json()
-    curr_user = User.query.get_or_404(id)
-    if 'name' in data:
-        curr_user.name = data['name']
-    if 'user_role' in data:
-        curr_user.user_role = data['user_role']
-    if 'password' in data:
-        if len(data['password']) < 4:
-            return jsonify({'message': 'password must be at least 4 characters'}), 404
-        else:
-            curr_user.password = generate_password_hash(data['password'], method='sha256')
-    if 'expire_date' in data:
-        curr_user.expire_date = data['expire_date']
     return jsonify({'message': 'success'})
 
 

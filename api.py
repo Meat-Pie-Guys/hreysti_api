@@ -3,7 +3,6 @@ import uuid
 import jwt
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -13,9 +12,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db\\fenrir.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-##########
-# TABLES #
-##########
 
 participates = db.Table(
     'Participates',
@@ -28,10 +24,11 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     open_id = db.Column(db.String(50), unique=True, nullable=False)
     name = db.Column(db.String(50), primary_key=False, nullable=False)
-    password = db.Column(db.String(50), primary_key=False, nullable=False)
-    user_role = db.Column(db.String(12), primary_key=False, nullable=False)
+    ssn = db.Column(db.String(10), unique=True, nullable=False)
+    password = db.Column(db.String(100), primary_key=False, nullable=False)
+    user_role = db.Column(db.String(12), primary_key=False, nullable=False, default='Client')
     start_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
-    expire_date = db.Column(db.DateTime, nullable=True)
+    expire_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
     workouts = db.relationship('Workout', secondary=participates, lazy='dynamic',
                                backref=db.backref('workouts', lazy='dynamic'))
 
@@ -49,31 +46,54 @@ class Description(db.Model):
     type = db.Column(db.String(50), primary_key=False, nullable=False)
 
 
-class Exercises(db.Model):
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    name = db.Column(db.String(50), primary_key=False, nullable=False)
-
-
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        if 'x-access-token' not in request.headers:
-            return jsonify({'message': 'no token'}), 404
-        token = request.headers['x-access-token']
+        if 'fenrir-token' not in request.headers:
+            return jsonify({'error': 1}), 404  # TODO REPLACE ERROR CODE
+        token = request.headers['fenrir-token']
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
             curr_user = User.query.filter_by(open_id=data['open_id']).first()
-            return f(curr_user, *args, **kwargs)
+            if curr_user:
+                return f(curr_user, *args, **kwargs)
+            return jsonify({'error': 2}), 404
         except jwt.DecodeError:
-            return jsonify({'message': 'invalid token'}), 404
+            return jsonify({'error': 3}), 404  # TODO REPLACE ERROR CODE
     return decorated
 
+@app.route('/user', methods=['POST'])
+def create_user():
+    data = request.get_json()
+    if 'name' not in data or 'password' not in data or 'ssn' not in data:
+        return jsonify({'error': 1}), 404
+    name = data['name']
+    pw = data['password']
+    ssn = data['ssn']
+    if len(name) == 0 or len(pw) == 0 or len(ssn) == 0:
+        return jsonify({'error': 4}), 404
+    if len(pw) < 6:
+        return jsonify({'error': 5}), 404
+    if len(ssn) != 10:
+        return jsonify({'error': 5}), 404  # TODO REPLACE ERROR CODE AND WITH REGEX FOR SSN
+    if db.session.query(User.id).filter_by(ssn=ssn).scalar() is not None:
+        return jsonify({'error': 6}), 404
+    pw = generate_password_hash(pw, method='sha256')
+    db.session.add(User(open_id=str(uuid.uuid4()), name=name, ssn=ssn, password=pw)
+    db.session.commit()
+    return jsonify({'error': 0})
 
+
+if __name__ == '__main__':
+    db.create_all()
+    app.run()
+
+"""    
 @app.route('/login', methods=['GET'])
 def login():
     auth = request.authorization
     if not auth or not auth.username or not auth.password:
-        return jsonify({'message': 'missing header fields'}), 404
+        return jsonify({'e': 'missing header fields'}), 404
     user = User.query.filter_by(name=auth.username).first()
     if not user or not check_password_hash(user.password, auth.password):
         return jsonify({'message': 'invalid credentials'})
@@ -83,7 +103,8 @@ def login():
 
 
 @app.route('/users', methods=['GET'])
-def get_all_users():
+@token_required
+def get_all_users(curr_user):
     lis = []
     all_users = User.query.all()
     for user in all_users:
@@ -153,25 +174,6 @@ def get_clients():
     return jsonify({'all_users': lis})
 
 
-@app.route('/user', methods=['POST'])
-def create_user():
-    data = request.get_json()
-    if 'name' not in data or 'password' not in data:
-        return jsonify({'message': 'missing header fields'}), 404
-    pw = data['password']
-    if len(name) == 0:
-        return jsonify({'message': 'name can not be empty'}), 404
-    if db.session.query(User.id).filter_by(name=name).scalar() is not None:
-        return jsonify({'message': 'username taken'}), 404
-    if len(pw) < 4:
-        return jsonify({'message': 'password must be at least 4 characters'}), 404
-    pw = generate_password_hash(pw, method='sha256')
-    db.session.add(User(open_id=str(uuid.uuid4()), name=name, password=pw, user_role='Client',
-                        start_date=datetime.datetime.today(), expire_date=datetime.datetime.today()))
-    db.session.commit()
-    return jsonify({'message': 'success'})
-
-
 @app.route('/delete/user/<int:id>/', methods=['GET'])
 def remove_user(id):
     user_gone = User.query.get_or_404(id)
@@ -198,9 +200,6 @@ def update_user(id):
     return jsonify({'message': 'success'})
 
 
-###################
-# WORKOUT QUERIES #
-###################
 @app.route('/workout', methods=['GET'])
 def all_workouts():
     lis = []
@@ -295,7 +294,4 @@ def get_workout_by_date():
             dictionary['date_time'] = workout.date_time
             lis.append(dictionary)
     return jsonify({'all_workouts': lis})
-
-if __name__ == '__main__':
-    db.create_all()
-    app.run()
+"""

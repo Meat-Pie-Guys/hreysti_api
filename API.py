@@ -71,7 +71,6 @@ def token_required(f):
             return f(curr_user, *args, **kwargs)
         except jwt.DecodeError:
             return jsonify({'message': 'invalid token'}), 404
-
     return decorated
 
 
@@ -109,9 +108,10 @@ def get_all_users():
     return jsonify({'all_users': lis})
 
 
-@app.route('/user/<int:id>/', methods=['GET'])
-def get_user(id):
-    user_got = User.query.filter_by(id=id).first_or_404()
+@app.route('/user/', methods=['GET'])
+@token_required
+def get_user(curr_user):
+    user_got = User.query.filter_by(id=curr_user.id).first_or_404()
     return jsonify(
         {
             'User': [

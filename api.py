@@ -1,5 +1,4 @@
-from _datetime import datetime
-import time
+import datetime
 import uuid
 import jwt
 from flask import Flask, jsonify, request
@@ -118,24 +117,6 @@ def get_user(id):
             ]})
 
 
-@app.route('/user/<string:username>', methods=['GET'])
-def get_user(username):
-    user_got = User.query.filter_by(name=username).first()
-    return jsonify(
-        {
-            'User': [
-                {
-                    'id': user_got.id,
-                    'name': user_got.name,
-                    'open_id': user_got.open_id,
-                    'user_role': user_got.user_role,
-                    'password': user_got.password,
-                    'start_date': user_got.start_date,
-                    'expire_date': user_got.expire_date
-                }
-            ]})
-
-
 @app.route('/user/coach/', methods=['GET'])
 def get_coaches():
     lis = []
@@ -177,7 +158,6 @@ def create_user():
     data = request.get_json()
     if 'name' not in data or 'password' not in data:
         return jsonify({'message': 'missing header fields'}), 404
-    name = data['name']
     pw = data['password']
     if len(name) == 0:
         return jsonify({'message': 'name can not be empty'}), 404

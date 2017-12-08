@@ -53,10 +53,7 @@ class Description(db.Model):
 def authenticated(fun):
     @wraps(fun)
     def decorated(*args, **kwargs):
-        for k,v in request.headers.items():
-            print(k, '->', v)
         if 'fenrir-token' not in request.headers:
-            print('here...')
             return jsonify({'error': error_codes.missing_token}), 401
         token = request.headers['fenrir-token']
         try:
@@ -201,6 +198,28 @@ def get_user(curr_user):
                     'expire_date': user_got.expire_date
                 }
         })
+
+
+@app.route('/user/all', methods=['GET'])
+@authenticated
+def get_all_users(curr_user):
+    user_got = User.query.filter_by(id=curr_user.id).first()
+    if not user_got:
+        return jsonify({'error': error_codes.no_such_user}), 444
+    lis = []
+    all_users = User.query.all()
+    for user in all_users:
+        dictionary = {}
+        dictionary['id'] = user.id
+        dictionary['name'] = user.name
+        dictionary['ssn'] = user.ssn
+        dictionary['open_id'] = user.open_id
+        dictionary['user_role'] = user.user_role
+        dictionary['password'] = user.password
+        dictionary['start_date'] = user.start_date
+        dictionary['expire_date'] = user.expire_date
+        lis.append(dictionary)
+    return jsonify({'error': error_codes.no_error, 'all_users': lis})
 
 
 if __name__ == '__main__':

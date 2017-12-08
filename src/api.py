@@ -177,12 +177,12 @@ def remove_user_by_id(curr_user, user_id):
 @authenticated
 def get_user(curr_user):
     """
-        Gets the information of the user that is currently
-        logged in. Used for all Roles
+    Gets the information of the user that is currently
+    logged in. Used for all Roles
 
-        :param curr_user: The current session user
-        :return: error code (= 0 if none) and the User information
-        """
+    :param curr_user: The current session user
+    :return: error code (= 0 if none) and the User information
+    """
     user_got = User.query.filter_by(id=curr_user.id).first()
     if not user_got:
         return jsonify({'error': error_codes.no_such_user}), 444
@@ -203,19 +203,25 @@ def get_user(curr_user):
 @app.route('/user/all', methods=['GET'])
 @authenticated
 def get_all_users(curr_user):
-    user_got = User.query.filter_by(id=curr_user.id).first()
-    if not user_got:
-        return jsonify({'error': error_codes.no_such_user}), 444
+    """
+    Gets the information of all of the users in the database
+    end returns a jsonobject with their information. Checks
+    if the user is a legal user and if the user has the role Admin
+
+    :param curr_user: The current session user
+    :return: error code (= 0 if none) and the User information
+    for all of the Users in the database
+    """
+    if curr_user.user_role != 'Admin':
+        return jsonify({'error': error_codes.access_denied}), 462
     lis = []
     all_users = User.query.all()
     for user in all_users:
         dictionary = {}
-        dictionary['id'] = user.id
         dictionary['name'] = user.name
         dictionary['ssn'] = user.ssn
         dictionary['open_id'] = user.open_id
         dictionary['user_role'] = user.user_role
-        dictionary['password'] = user.password
         dictionary['start_date'] = user.start_date
         dictionary['expire_date'] = user.expire_date
         lis.append(dictionary)

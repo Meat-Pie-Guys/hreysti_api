@@ -183,21 +183,47 @@ def get_user(curr_user):
     :param curr_user: The current session user
     :return: error code (= 0 if none) and the User information
     """
-    user_got = User.query.filter_by(id=curr_user.id).first()
-    if not user_got:
-        return jsonify({'error': error_codes.no_such_user}), 444
     return jsonify(
         {
             'error': error_codes.no_error,
             'user': {
-                    'id': user_got.id,
-                    'ssn': user_got.ssn,
-                    'name': user_got.name,
-                    'open_id': user_got.open_id,
-                    'start_date': user_got.start_date,
-                    'expire_date': user_got.expire_date
+                    'id': curr_user.id,
+                    'ssn': curr_user.ssn,
+                    'name': curr_user.name,
+                    'open_id': curr_user.open_id,
+                    'start_date': curr_user.start_date,
+                    'expire_date': curr_user.expire_date
                 }
         })
+
+
+@app.route('/admin/user/name/update/<user_id>', methods=['PUT'])
+@authenticated
+def admin_update_user(curr_user, user_id):
+    """
+    Updates the name of the user given legal data.
+
+    :param curr_user: The current session user
+    :return: error code (= 0 if none)
+    """
+    if curr_user.user_role != 'Admin':
+        return jsonify({'error': error_codes.access_denied}), 434
+    update_user = User.query.filter_by(open_id=user_id).first()
+    if not update_user:
+        return jsonify({'error': error_codes.no_such_user}), 444
+    data = request.get_json()
+    if 'expire_date' not in data and 'role' not in data:
+        return jsonify({'error': error_codes.missing_data}), 452
+    if 'expire_date' in data:
+        if len(data['expire_date']) == 0:
+            return jsonify({'error': error_codes.empty_data}), 405
+    if 'role' in data:
+        if len(data['role']) == 0:
+            return jsonify({'error': error_codes.empty_data}), 405
+    update_user.expire_date = datetime.datetime(*tuple(map(int, list(reversed(data['expire_date'].split('/'))) + ['23', '59'])))
+    update_user.user_role = data['role']
+    db.session.commit()
+    return jsonify({'error': error_codes.no_error})
 
 
 @app.route('/user/all', methods=['GET'])
@@ -214,18 +240,41 @@ def get_all_users(curr_user):
     """
     if curr_user.user_role != 'Admin':
         return jsonify({'error': error_codes.access_denied}), 462
-    lis = []
-    all_users = User.query.all()
-    for user in all_users:
-        dictionary = {}
-        dictionary['name'] = user.name
-        dictionary['ssn'] = user.ssn
-        dictionary['open_id'] = user.open_id
-        dictionary['user_role'] = user.user_role
-        dictionary['start_date'] = user.start_date
-        dictionary['expire_date'] = user.expire_date
-        lis.append(dictionary)
-    return jsonify({'error': error_codes.no_error, 'all_users': lis})
+    return jsonify({
+        'error': error_codes.no_error,
+        'all_users': [{
+            'name': user.name,
+            'ssn': user.ssn,
+            'open_id': user.open_id,
+            'user_role': user.user_role,
+            'start_date': user.start_date,
+            'expire_date': user.expire_date
+        } for user in User.query.all()]
+    })
+
+
+@app.route('/description', methods=['POST'])
+@authenticated
+def create_description(curr_user):
+    """
+    Creates a new description for a workout.
+    :param curr_user:
+    :return: error code ( = 0 if none)
+    """
+    if curr_user.user_role != 'Admin' and curr_user.user_role != 'Coach':
+        return jsonify({'error': error_codes.access_denied}), 462
+    data = request.get_json()
+    if any(k not in data for k in ('type', 'text')):
+        return jsonify({'error': error_codes.missing_data}), 404
+    text = data['text']
+    type = data['type']
+    if len(text) == 0:
+        return jsonify({'error': error_codes.empty_data}), 458
+    if len(type) == 0:
+        return jsonify({'error': error_codes.empty_data}), 458
+    db.session.add(Description(text=text, type=type))
+    db.session.commit()
+    return jsonify({'error': error_codes.no_error})
 
 
 if __name__ == '__main__':

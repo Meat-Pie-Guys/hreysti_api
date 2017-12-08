@@ -173,5 +173,32 @@ def remove_user_by_id(curr_user, user_id):
     return jsonify({'error': error_codes.no_error})
 
 
+@app.route('/get_user/', methods=['GET'])
+@authenticated
+def get_user(curr_user):
+    """
+        Gets the information of the user that is currently
+        logged in. Used for all Roles
+
+        :param curr_user: The current session user
+        :return: error code (= 0 if none) and the User information
+        """
+    user_got = User.query.filter_by(id=curr_user.id).first()
+    if not user_got:
+        return jsonify({'error': error_codes.no_such_user}), 444
+    return jsonify(
+        {
+            'error': error_codes.no_error,
+            'User': [
+                {
+                    'id': user_got.id,
+                    'name': user_got.name,
+                    'open_id': user_got.open_id,
+                    'start_date': user_got.start_date,
+                    'expire_date': user_got.expire_date
+                }
+            ]})
+
+
 if __name__ == '__main__':
     app.run()

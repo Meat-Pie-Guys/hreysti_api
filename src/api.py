@@ -53,7 +53,10 @@ class Description(db.Model):
 def authenticated(fun):
     @wraps(fun)
     def decorated(*args, **kwargs):
+        for k,v in request.headers.items():
+            print(k, '->', v)
         if 'fenrir-token' not in request.headers:
+            print('here...')
             return jsonify({'error': error_codes.missing_token}), 401
         token = request.headers['fenrir-token']
         try:
@@ -173,7 +176,7 @@ def remove_user_by_id(curr_user, user_id):
     return jsonify({'error': error_codes.no_error})
 
 
-@app.route('/get_user/', methods=['GET'])
+@app.route('/get_user', methods=['GET'])
 @authenticated
 def get_user(curr_user):
     """
@@ -189,15 +192,15 @@ def get_user(curr_user):
     return jsonify(
         {
             'error': error_codes.no_error,
-            'User': [
-                {
+            'user': {
                     'id': user_got.id,
+                    'ssn': user_got.ssn,
                     'name': user_got.name,
                     'open_id': user_got.open_id,
                     'start_date': user_got.start_date,
                     'expire_date': user_got.expire_date
                 }
-            ]})
+        })
 
 
 if __name__ == '__main__':

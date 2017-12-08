@@ -1,0 +1,12 @@
+no_error = 0
+missing_token = 1
+no_such_user = 2
+invalid_token = 3
+missing_header_fields = 4
+empty_data = 5
+invalid_password = 6
+invalid_ssn = 7
+user_already_exists = 8
+invalid_credentials = 9
+missing_data = 10
+access_denied = 11

@@ -41,13 +41,7 @@ class Workout(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     coach_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     date_time = db.Column(db.DateTime(), unique=True, nullable=False)
-    description_id = db.Column(db.Integer, db.ForeignKey('description.id'), primary_key=False, nullable=False)
-
-
-class Description(db.Model):
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    text = db.Column(db.Text, primary_key=False, nullable=False)
-    type = db.Column(db.String(50), primary_key=False, nullable=False)
+    description = db.Column(db.Text, primary_key=False, nullable=False)
 
 
 def authenticated(fun):
@@ -253,26 +247,35 @@ def get_all_users(curr_user):
     })
 
 
-@app.route('/description', methods=['POST'])
+@app.route('/workout', methods=['POST'])
 @authenticated
-def create_description(curr_user):
-    """
-    Creates a new description for a workout.
-    :param curr_user:
-    :return: error code ( = 0 if none)
-    """
+def create_workout(curr_user):
+    data = request.get_json()
     if curr_user.user_role != 'Admin' and curr_user.user_role != 'Coach':
         return jsonify({'error': error_codes.access_denied}), 462
-    data = request.get_json()
-    if any(k not in data for k in ('type', 'text')):
-        return jsonify({'error': error_codes.missing_data}), 404
-    text = data['text']
-    type = data['type']
-    if len(text) == 0:
-        return jsonify({'error': error_codes.empty_data}), 458
-    if len(type) == 0:
-        return jsonify({'error': error_codes.empty_data}), 458
-    db.session.add(Description(text=text, type=type))
+    if 'coach_id' not in data or 'description' not in data or 'date' not in data or 'time' not in data:
+        return jsonify({'error': error_codes.missing_data}), 461
+    coach_id = data['coach_id']
+    desc = data['description']
+    if 'coach_id' in data:
+        if len(data['coach_id']) == 0:
+            return jsonify({'error': error_codes.empty_data}), 405
+    if 'description' in data:
+        if len(data['description']) == 0:
+            return jsonify({'error': error_codes.empty_data}), 405
+    if 'date' in data:
+        if len(data['date']) == 0:
+            return jsonify({'error': error_codes.empty_data}), 405
+    if 'time' in data:
+        if len(data['time']) == 0:
+            return jsonify({'error': error_codes.empty_data}), 405
+    the_coach = User.query.filter_by(id=coach_id).first()
+    print(the_coach.user_role)
+    if the_coach.user_role != 'Coach':
+        if the_coach.user_role != 'Admin':
+            return jsonify({'error': error_codes.access_denied}), 496
+    db.session.add(Workout(coach_id=coach_id, date_time=datetime.datetime(
+        *tuple(map(int, list(reversed(data['date'].split('/'))) + data['time'].split(':')))), description=desc))
     db.session.commit()
     return jsonify({'error': error_codes.no_error})
 

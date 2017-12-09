@@ -10,3 +10,4 @@ user_already_exists = 8
 invalid_credentials = 9
 missing_data = 10
 access_denied = 11
+no_such_description = 12

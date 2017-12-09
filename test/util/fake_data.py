@@ -6,21 +6,13 @@ from werkzeug.security import generate_password_hash
 from src.api import User, Description, Workout
 
 
-class FakeDescriptions:
-    def __init__(self):
-        self.list_of_descriptions = [
-            Description(id=1, text='5 CockPushUps', type='Cock'),
-            Description(id=2, text='69 CockPushUps', type='Cock'),
-        ]
-
-
 class FakeWorkouts:
     def __init__(self):
         self.list_of_workouts = [
-            Workout(id=1, coach_id=4, date_time=datetime.datetime(2017, 11, 30, 8, 00, 00), description_id=1),
-            Workout(id=2, coach_id=5, date_time=datetime.datetime(2017, 11, 30, 12, 00, 00), description_id=1),
-            Workout(id=3, coach_id=4, date_time=datetime.datetime(2017, 11, 30, 18, 00, 00), description_id=1),
-            Workout(id=4, coach_id=5, date_time=datetime.datetime(2017, 12, 1, 12, 00, 00), description_id=2),
+            Workout(id=1, coach_id=4, date_time=datetime.datetime(2017, 11, 30, 8, 00, 00), description='5 CockPushUps'),
+            Workout(id=2, coach_id=5, date_time=datetime.datetime(2017, 11, 30, 12, 00, 00), description='5 CockPushUps',),
+            Workout(id=3, coach_id=4, date_time=datetime.datetime(2017, 11, 30, 18, 00, 00), description='5 CockPushUps',),
+            Workout(id=4, coach_id=5, date_time=datetime.datetime(2017, 12, 1, 12, 00, 00), description='69 CockPushUps',),
         ]
 
 

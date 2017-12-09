@@ -250,6 +250,11 @@ def get_all_users(curr_user):
 @app.route('/workout', methods=['POST'])
 @authenticated
 def create_workout(curr_user):
+    """
+
+    :param curr_user:
+    :return: error code (= 0 if none)
+    """
     data = request.get_json()
     if curr_user.user_role != 'Admin' and curr_user.user_role != 'Coach':
         return jsonify({'error': error_codes.access_denied}), 462
@@ -270,7 +275,6 @@ def create_workout(curr_user):
         if len(data['time']) == 0:
             return jsonify({'error': error_codes.empty_data}), 405
     the_coach = User.query.filter_by(id=coach_id).first()
-    print(the_coach.user_role)
     if the_coach.user_role != 'Coach':
         if the_coach.user_role != 'Admin':
             return jsonify({'error': error_codes.access_denied}), 496
@@ -278,6 +282,38 @@ def create_workout(curr_user):
         *tuple(map(int, list(reversed(data['date'].split('/'))) + data['time'].split(':')))), description=desc))
     db.session.commit()
     return jsonify({'error': error_codes.no_error})
+
+
+@app.route('/user/coaches', methods=['GET'])
+@authenticated
+def get_all_none_clientss(curr_user):
+    """
+    Gets the information of all of the coaches in the database
+    end returns a jsonobject with their information. Checks
+    if the user is a legal user and if the user has the role Admin
+    Admins are also considered to coaches as per request of our client(Fenrir)
+
+    :param curr_user: The current session user
+    :return: error code (= 0 if none) and the User information
+    for all of the non-Client Users in the database
+    """
+    if curr_user.user_role != 'Admin':
+        return jsonify({'error': error_codes.access_denied}), 462
+    return jsonify({
+        'error': error_codes.no_error,
+        'all_users': [{
+            'name': user.name,
+            'ssn': user.ssn,
+            'open_id': user.open_id,
+            'user_role': user.user_role,
+            'start_date': user.start_date,
+            'expire_date': user.expire_date
+        } for user in User.query.all()
+            if user.user_role != 'Client']
+    })
+
+
+
 
 
 if __name__ == '__main__':

@@ -315,26 +315,19 @@ def get_all_none_clientss(curr_user):
     })
 
 
-@app.route('/workout/today', methods=['POST'])
+@app.route('/workout/<workout_date_time>', methods=['GET'])
 @authenticated
-def get_workout(curr_user):
+def get_workout(curr_user, workout_date_time):
     """
 
     :param curr_user:
     :return: error code (= 0 if none) and the Workout information
     of the date and time sent in the body
     """
-    data = request.get_json()
-    if 'date' in data:
-        if len(data['date']) == 0:
-            return jsonify({'error': error_codes.empty_data}), 405
-    if 'time' in data:
-        if len(data['time']) == 0:
-            return jsonify({'error': error_codes.empty_data}), 405
     workout_got = Workout.query.filter_by(date_time=datetime.datetime(
-        *tuple(map(int, list(reversed(data['date'].split('/'))) + data['time'].split(':'))))).first()
+        *tuple(map(int, list((workout_date_time.split('-'))))))).first()
     if workout_got is None:
-        return jsonify({'error': error_codes.invalid_date_time}), 467
+        return jsonify({'error': error_codes.invalid_date_time}), 487
     return jsonify(
         {
             'error': error_codes.no_error,
@@ -346,6 +339,21 @@ def get_workout(curr_user):
             }
         })
 
+
+@app.route('/workout/today', methods=['GET'])
+@authenticated
+def get_workout_by_date():
+    current_date = datetime.datetime.today().date()
+    return jsonify({
+        'error': error_codes.no_error,
+        'all_workouts': [{
+            'id': workout.id,
+            'coach_id': workout.coach_id,
+            'description': workout.description,
+            'date_time': workout.date_time,
+        } for workout in Workout.query.all()
+            if workout.date_time.date() == current_date]
+    })
 
 
 if __name__ == '__main__':

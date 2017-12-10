@@ -319,10 +319,12 @@ def get_all_none_clientss(curr_user):
 @authenticated
 def get_workout(curr_user, workout_date_time):
     """
-
-    :param curr_user:
+    Takes in a parameter workout_date_time that has to be structured
+    like for example '2001-09-11-13-00-00' and if there is a workout
+    at that time in the database with this date_time then it is sent
+    :param curr_user, workout_date_time:
     :return: error code (= 0 if none) and the Workout information
-    of the date and time sent in the body
+    of the date and time sent in the url
     """
     workout_got = Workout.query.filter_by(date_time=datetime.datetime(
         *tuple(map(int, list((workout_date_time.split('-'))))))).first()
@@ -340,10 +342,18 @@ def get_workout(curr_user, workout_date_time):
         })
 
 
-@app.route('/workout/today', methods=['GET'])
+@app.route('/workout/all/<workout_date_time>', methods=['GET'])
 @authenticated
-def get_workout_by_date():
-    current_date = datetime.datetime.today().date()
+def get_workouts_by_date(curr_user, workout_date_time):
+    """
+    Takes in a parameter workout_date_time that has to be structured
+    like for example '2001-09-11' and if there is a workout
+    at that time in the database with this date_time then it is sent
+    :param curr_user:
+    :param workout_date_time:
+    :return: error code (= 0 if none) and the Workout information
+    of the workouts at the date that was sent in
+    """
     return jsonify({
         'error': error_codes.no_error,
         'all_workouts': [{
@@ -352,7 +362,8 @@ def get_workout_by_date():
             'description': workout.description,
             'date_time': workout.date_time,
         } for workout in Workout.query.all()
-            if workout.date_time.date() == current_date]
+            if workout.date_time.date() == datetime.datetime(
+            *tuple(map(int, list((workout_date_time.split('-')))))).date()]
     })
 
 

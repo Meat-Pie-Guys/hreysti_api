@@ -251,6 +251,8 @@ def get_all_users(curr_user):
 @authenticated
 def create_workout(curr_user):
     """
+    Allows admins and coaches to create a workout at a specific time
+    with a specific descritpion and that workout is assigned to a coach
 
     :param curr_user:
     :return: error code (= 0 if none)
@@ -313,6 +315,36 @@ def get_all_none_clientss(curr_user):
     })
 
 
+@app.route('/workout/today', methods=['POST'])
+@authenticated
+def get_workout(curr_user):
+    """
+
+    :param curr_user:
+    :return: error code (= 0 if none) and the Workout information
+    of the date and time sent in the body
+    """
+    data = request.get_json()
+    if 'date' in data:
+        if len(data['date']) == 0:
+            return jsonify({'error': error_codes.empty_data}), 405
+    if 'time' in data:
+        if len(data['time']) == 0:
+            return jsonify({'error': error_codes.empty_data}), 405
+    workout_got = Workout.query.filter_by(date_time=datetime.datetime(
+        *tuple(map(int, list(reversed(data['date'].split('/'))) + data['time'].split(':'))))).first()
+    if workout_got is None:
+        return jsonify({'error': error_codes.invalid_date_time}), 467
+    return jsonify(
+        {
+            'error': error_codes.no_error,
+            'workout': {
+                'id': workout_got.id,
+                'coach_id': workout_got.coach_id,
+                'description': workout_got.description,
+                'date_time': workout_got.date_time
+            }
+        })
 
 
 

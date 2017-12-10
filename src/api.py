@@ -274,7 +274,7 @@ def create_workout(curr_user):
     if 'time' in data:
         if len(data['time']) == 0:
             return jsonify({'error': error_codes.empty_data}), 405
-    the_coach = User.query.filter_by(id=coach_id).first()
+    the_coach = User.query.filter_by(open_id=coach_id).first()
     if the_coach.user_role != 'Coach':
         if the_coach.user_role != 'Admin':
             return jsonify({'error': error_codes.access_denied}), 496
@@ -297,7 +297,7 @@ def get_all_none_clientss(curr_user):
     :return: error code (= 0 if none) and the User information
     for all of the non-Client Users in the database
     """
-    if curr_user.user_role != 'Admin':
+    if curr_user.user_role != 'Admin' or curr_user.user_role != 'Coach':
         return jsonify({'error': error_codes.access_denied}), 462
     return jsonify({
         'error': error_codes.no_error,

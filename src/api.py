@@ -258,7 +258,7 @@ def create_workout(curr_user):
     :return: error code (= 0 if none)
     """
     data = request.get_json()
-    if curr_user.user_role != 'Admin' and curr_user.user_role != 'Coach':
+    if curr_user.user_role == 'Client':
         return jsonify({'error': error_codes.access_denied}), 462
     if 'coach_id' not in data or 'description' not in data or 'date' not in data or 'time' not in data:
         return jsonify({'error': error_codes.missing_data}), 461
@@ -315,7 +315,7 @@ def get_all_none_clientss(curr_user):
     })
 
 
-@app.route('/workout/<workout_date_time>', methods=['GET'])
+@app.route('/workout/today/<workout_date_time>', methods=['GET'])
 @authenticated
 def get_workout(curr_user, workout_date_time):
     """
@@ -365,6 +365,29 @@ def get_workouts_by_date(curr_user, workout_date_time):
             if workout.date_time.date() == datetime.datetime(
             *tuple(map(int, list((workout_date_time.split('-')))))).date()]
     })
+
+@app.route('/workout/<int:workout_id>', methods=['GET'])
+@authenticated
+def participate_in_workout(curr_user, workout_id):
+    """
+    Adds the curr_user to the list of participants in the workout
+    that has the id that is passed as the paramter workout_id. If the user
+    is already participating it removes the connection between the user and the workout
+    :param curr_user:
+    :param workout_id:
+    :return: error code (= 0 if none) if the workout does not exist
+    then it sends an appropriate error code
+    """
+    workout = Workout.query.filter_by(id=workout_id).first()
+    if not workout:
+        return jsonify({'error': error_codes.no_such_workout }), 431
+    x = User.query.filter(User.workouts.any(id=workout_id)).all()
+    if x is not None:
+        curr_user.workouts.remove(workout)
+    else:
+        curr_user.workouts.append(workout)
+    db.session.commit()
+    return jsonify({'error': error_codes.no_error})
 
 
 if __name__ == '__main__':

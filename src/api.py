@@ -1,7 +1,7 @@
 import datetime
 import uuid
 from functools import wraps
-
+import dateparser
 import jwt
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
@@ -366,6 +366,7 @@ def get_workouts_by_date(curr_user, workout_date_time):
             *tuple(map(int, list((workout_date_time.split('-')))))).date()]
     })
 
+
 @app.route('/workout/<int:workout_id>', methods=['GET'])
 @authenticated
 def participate_in_workout(curr_user, workout_id):
@@ -379,13 +380,59 @@ def participate_in_workout(curr_user, workout_id):
     then it sends an appropriate error code
     """
     workout = Workout.query.filter_by(id=workout_id).first()
-    if not workout:
+    if workout is None:
         return jsonify({'error': error_codes.no_such_workout }), 431
-    x = User.query.filter(User.workouts.any(id=workout_id)).all()
+    x = User.query.filter(User.workouts.any(id=workout_id)).first()
     if x is not None:
         curr_user.workouts.remove(workout)
     else:
         curr_user.workouts.append(workout)
+    db.session.commit()
+    return jsonify({'error': error_codes.no_error})
+
+
+@app.route('/admin/workout/update/<workout_id>', methods=['PUT'])
+@authenticated
+def admin_update_workout(curr_user, workout_id):
+    """
+    A function that allows the Admin to update every value bound to a
+    specific id, excluding the id. 
+    :param curr_user: The current session user
+    :return: error code (= 0 if none)
+    """
+    if curr_user.user_role != 'Admin':
+        return jsonify({'error': error_codes.access_denied}), 434
+    update_workout = Workout.query.filter_by(id=workout_id).first()
+    if not update_workout:
+        return jsonify({'error': error_codes.no_such_workout}), 494
+    data = request.get_json()
+    if 'coach_id' not in data and 'description' not in data and 'date' not in data and 'time' not in data:
+        return jsonify({'error': error_codes.missing_data}), 452
+    if 'coach_id' in data:
+        if len(data['coach_id']) == 0:
+            return jsonify({'error': error_codes.empty_data}), 405
+        update_workout.coach_id = data['coach_id']
+    if 'description' in data:
+        if len(data['description']) == 0:
+            return jsonify({'error': error_codes.empty_data}), 406
+        update_workout.description = data['description']
+    if 'date' in data and 'time' in data:
+        if len(data['date']) == 0 or len(data['time']) == 0:
+            return jsonify({'error': error_codes.empty_data}), 407
+        update_workout.date_time = datetime.datetime(*tuple(map(int, list(
+            reversed(data['date'].split('/'))) + data['time'].split(':'))))
+    if 'date' in data and 'time' not in data:
+        if len(data['date']) == 0:
+            return jsonify({'error': error_codes.empty_data}), 408
+        old_time = update_workout.date_time.strftime('%H:%M')
+        update_workout.date_time = datetime.datetime(*tuple(map(int, list(reversed(
+            data['date'].split('/'))) + list(old_time.split(':')))))
+    if 'time' in data and 'date' not in data:
+        if len(data['time']) == 0:
+            return jsonify({'error': error_codes.empty_data}), 409
+        old_date = update_workout.date_time.strftime('%Y/%m/%d')
+        update_workout.date_time = datetime.datetime(*tuple(map(int, list(
+            old_date.split('/')) + data['time'].split(':'))))
     db.session.commit()
     return jsonify({'error': error_codes.no_error})
 

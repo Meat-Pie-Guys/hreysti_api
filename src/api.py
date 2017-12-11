@@ -367,7 +367,7 @@ def get_workouts_by_date(curr_user, workout_date_time):
     })
 
 
-@app.route('/workout/<int:workout_id>', methods=['GET'])
+@app.route('/workout/<workout_id>', methods=['GET'])
 @authenticated
 def participate_in_workout(curr_user, workout_id):
     """

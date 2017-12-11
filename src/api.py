@@ -186,6 +186,7 @@ def get_user(curr_user):
                 'id': curr_user.id,
                 'ssn': curr_user.ssn,
                 'name': curr_user.name,
+                'role': curr_user.user_role,
                 'open_id': curr_user.open_id,
                 'start_date': curr_user.start_date,
                 'expire_date': curr_user.expire_date

@@ -13,3 +13,4 @@ access_denied = 11
 no_such_description = 12
 invalid_date_time = 13
 no_such_workout = 14
+workout_is_full = 15

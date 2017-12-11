@@ -42,6 +42,8 @@ class Workout(db.Model):
     coach_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     date_time = db.Column(db.DateTime(), unique=True, nullable=False)
     description = db.Column(db.Text, primary_key=False, nullable=False)
+    users = db.relationship('User', secondary=participates, lazy='dynamic',
+                               backref=db.backref('users', lazy='dynamic'))
 
 
 def authenticated(fun):
@@ -299,7 +301,7 @@ def get_all_none_clientss(curr_user):
     :return: error code (= 0 if none) and the User information
     for all of the non-Client Users in the database
     """
-    if curr_user.user_role != 'Admin' or curr_user.user_role != 'Coach':
+    if curr_user.user_role == 'Client':
         return jsonify({'error': error_codes.access_denied}), 462
     return jsonify({
         'error': error_codes.no_error,
@@ -354,20 +356,24 @@ def get_workouts_by_date(curr_user, workout_date_time):
     :return: error code (= 0 if none) and the Workout information
     of the workouts at the date that was sent in
     """
-    return jsonify({
-        'error': error_codes.no_error,
-        'all_workouts': [{
-            'id': workout.id,
-            'coach_id': workout.coach_id,
-            'description': workout.description,
-            'date_time': workout.date_time,
-        } for workout in Workout.query.all()
-            if workout.date_time.date() == datetime.datetime(
-            *tuple(map(int, list((workout_date_time.split('-')))))).date()]
-    })
+    currentdate = datetime.datetime.today()
+    all_work = Workout.query.all()
+    lis = []
+    for workout in all_work:
+        if workout.date_time.date() == datetime.datetime(
+                *tuple(map(int, list((workout_date_time.split('-')))))).date():
+            dictionary = {}
+            the_coach = User.query.filter_by(open_id=workout.coach_id).first()
+            dictionary['id'] = workout.id
+            dictionary['coach_name'] = the_coach.name
+            dictionary['description'] = workout.description
+            dictionary['date_time'] = workout.date_time
+            dictionary['attending'] = db.session.query(Workout).join(Workout.users).filter(Workout.id==workout.id).count()
+            lis.append(dictionary)
+    return jsonify({'error': error_codes.no_error, 'all_workouts': lis})
 
 
-@app.route('/workout/<workout_id>', methods=['GET'])
+@app.route('/workout/<int:workout_id>', methods=['GET'])
 @authenticated
 def participate_in_workout(curr_user, workout_id):
     """
@@ -383,12 +389,17 @@ def participate_in_workout(curr_user, workout_id):
     if workout is None:
         return jsonify({'error': error_codes.no_such_workout }), 431
     x = User.query.filter(User.workouts.any(id=workout_id)).first()
+    users_attending = Workout.query.filter(Workout.users).all()
+    if len(users_attending) > 11:
+        return jsonify({'error': error_codes.workout_is_full})
     if x is not None:
         curr_user.workouts.remove(workout)
+        db.session.commit()
+        return jsonify({'error': error_codes.no_error, 'message:': 'removed'})
     else:
         curr_user.workouts.append(workout)
-    db.session.commit()
-    return jsonify({'error': error_codes.no_error})
+        db.session.commit()
+        return jsonify({'error': error_codes.no_error, 'message:': 'attended'})
 
 
 @app.route('/admin/workout/update/<workout_id>', methods=['PUT'])

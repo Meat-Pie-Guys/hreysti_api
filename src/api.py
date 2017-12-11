@@ -16,7 +16,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///..\\db\\fenrir.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-
 participates = db.Table(
     'Participates',
     db.Column('u_id', db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), primary_key=True),
@@ -43,7 +42,7 @@ class Workout(db.Model):
     date_time = db.Column(db.DateTime(), unique=True, nullable=False)
     description = db.Column(db.Text, primary_key=False, nullable=False)
     users = db.relationship('User', secondary=participates, lazy='dynamic',
-                               backref=db.backref('users', lazy='dynamic'))
+                            backref=db.backref('users', lazy='dynamic'))
 
 
 def authenticated(fun):
@@ -60,6 +59,7 @@ def authenticated(fun):
             return jsonify({'error': error_codes.no_such_user}), 402
         except jwt.DecodeError:
             return jsonify({'error': error_codes.invalid_token}), 403
+
     return decorated
 
 
@@ -183,13 +183,13 @@ def get_user(curr_user):
         {
             'error': error_codes.no_error,
             'user': {
-                    'id': curr_user.id,
-                    'ssn': curr_user.ssn,
-                    'name': curr_user.name,
-                    'open_id': curr_user.open_id,
-                    'start_date': curr_user.start_date,
-                    'expire_date': curr_user.expire_date
-                }
+                'id': curr_user.id,
+                'ssn': curr_user.ssn,
+                'name': curr_user.name,
+                'open_id': curr_user.open_id,
+                'start_date': curr_user.start_date,
+                'expire_date': curr_user.expire_date
+            }
         })
 
 
@@ -216,7 +216,8 @@ def admin_update_user(curr_user, user_id):
     if 'role' in data:
         if len(data['role']) == 0:
             return jsonify({'error': error_codes.empty_data}), 405
-    update_user.expire_date = datetime.datetime(*tuple(map(int, list(reversed(data['expire_date'].split('/'))) + ['23', '59'])))
+    update_user.expire_date = datetime.datetime(
+        *tuple(map(int, list(reversed(data['expire_date'].split('/'))) + ['23', '59'])))
     update_user.user_role = data['role']
     db.session.commit()
     return jsonify({'error': error_codes.no_error})
@@ -368,7 +369,8 @@ def get_workouts_by_date(curr_user, workout_date_time):
             dictionary['coach_name'] = the_coach.name
             dictionary['description'] = workout.description
             dictionary['date_time'] = workout.date_time
-            dictionary['attending'] = db.session.query(Workout).join(Workout.users).filter(Workout.id==workout.id).count()
+            dictionary['attending'] = db.session.query(Workout).join(Workout.users).filter(
+                Workout.id == workout.id).count()
             lis.append(dictionary)
     return jsonify({'error': error_codes.no_error, 'all_workouts': lis})
 
@@ -385,19 +387,21 @@ def participate_in_workout(curr_user, workout_id):
     :return: error code (= 0 if none) if the workout does not exist
     then it sends an appropriate error code
     """
-    workout = Workout.query.filter_by(id=workout_id).first()
-    if workout is None:
-        return jsonify({'error': error_codes.no_such_workout }), 431
-    x = User.query.filter(User.workouts.any(id=workout_id)).first()
-    users_attending = Workout.query.filter(Workout.users).all()
-    if len(users_attending) > 11:
+    work = Workout.query.filter_by(id=workout_id).first()
+    if work is None:
+        return jsonify({'error': error_codes.no_such_workout}), 431
+    x = User.query.join(Workout.users).filter(Workout.id == workout_id).filter(User.id == curr_user.id).first()
+
+    print(x)
+    if db.session.query(Workout).join(Workout.users).filter(
+                    Workout.id == work.id).count() > 11:
         return jsonify({'error': error_codes.workout_is_full})
     if x is not None:
-        curr_user.workouts.remove(workout)
+        curr_user.workouts.remove(work)
         db.session.commit()
         return jsonify({'error': error_codes.no_error, 'message:': 'removed'})
     else:
-        curr_user.workouts.append(workout)
+        curr_user.workouts.append(work)
         db.session.commit()
         return jsonify({'error': error_codes.no_error, 'message:': 'attended'})
 

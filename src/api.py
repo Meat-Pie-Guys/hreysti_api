@@ -358,7 +358,6 @@ def get_workouts_by_date(curr_user, workout_date_time):
     :return: error code (= 0 if none) and the Workout information
     of the workouts at the date that was sent in
     """
-    currentdate = datetime.datetime.today()
     all_work = Workout.query.all()
     lis = []
     for workout in all_work:
@@ -451,6 +450,37 @@ def admin_update_workout(curr_user, workout_id):
             old_date.split('/')) + data['time'].split(':'))))
     db.session.commit()
     return jsonify({'error': error_codes.no_error})
+
+
+@app.route('/workout/coach/<workout_date_time>', methods=['GET'])
+@authenticated
+def get_coach_workouts_by_date(curr_user, workout_date_time):
+    """
+    Takes in a parameter workout_date_time that has to be structured
+    like for example '2001-09-11' and if there is a workout
+    at that time in the database with this date_time then it is sent
+    :param curr_user:
+    :param workout_date_time:
+    :return: error code (= 0 if none) and the Workout information
+    of the workouts at the date that was sent in
+    """
+    if curr_user.user_role == 'Client':
+        return jsonify({'error': error_codes.access_denied}), 421
+    all_work = Workout.query.all()
+    lis = []
+    for workout in all_work:
+        if workout.date_time.date() == datetime.datetime(
+                *tuple(map(int, list((workout_date_time.split('-')))))).date() and curr_user.open_id == workout.coach_id:
+            dictionary = {}
+            the_coach = User.query.filter_by(open_id=workout.coach_id).first()
+            dictionary['id'] = workout.id
+            dictionary['coach_name'] = the_coach.name
+            dictionary['description'] = workout.description
+            dictionary['date_time'] = workout.date_time
+            dictionary['attending'] = db.session.query(Workout).join(Workout.users).filter(
+                Workout.id == workout.id).count()
+            lis.append(dictionary)
+    return jsonify({'error': error_codes.no_error, 'all_workouts': lis})
 
 
 if __name__ == '__main__':

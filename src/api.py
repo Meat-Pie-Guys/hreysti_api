@@ -32,7 +32,7 @@ class User(db.Model):
     user_role = db.Column(db.String(12), primary_key=False, nullable=False, default='Client')
     start_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
     expire_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
-    workouts = db.relationship('Workout', secondary=participates, lazy='dynamic',
+    workouts = db.relationship('Workout', secondary=participates, cascade="all,delete", lazy='dynamic',
                                backref=db.backref('workouts', lazy='dynamic'))
 
 
@@ -41,7 +41,7 @@ class Workout(db.Model):
     coach_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     date_time = db.Column(db.DateTime(), unique=True, nullable=False)
     description = db.Column(db.Text, primary_key=False, nullable=False)
-    users = db.relationship('User', secondary=participates, lazy='dynamic',
+    users = db.relationship('User', secondary=participates, cascade="all,delete", lazy='dynamic',
                             backref=db.backref('users', lazy='dynamic'))
 
 

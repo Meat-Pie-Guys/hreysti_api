@@ -48,19 +48,48 @@ class TestAdminUpdateWorkout(unittest.TestCase):
                                     headers=self.headers_sent, data=json.dumps(body_to_send))
         self.assertEqual(json.loads(res.data), {'error': error_codes.missing_data})
 
-    def test_admin_upgrade_workout_coach_id_invalid_data(self):
+    def test_admin_update_workout_coach_id_invalid_data(self):
         workout = self.list_of_workouts[0]
         body_to_send = {'coach_id': ''}
         res = app.test_client().put('/admin/workout/update/' + str(workout.id),
                                     headers=self.headers_sent, data=json.dumps(body_to_send))
         self.assertEqual(json.loads(res.data), {'error': error_codes.empty_data})
 
-    def test_admin_update_role_invalid(self):
-        tmp_oid = self.list_of_users[0].open_id
-        body_to_send = {'role': 'Rocket'}
-        res = app.test_client().put('/admin/user/name/update/' + tmp_oid,
+    def test_admin_update_workout_description_invalid_data(self):
+        workout = self.list_of_workouts[0]
+        body_to_send = {'description': ''}
+        res = app.test_client().put('/admin/workout/update/' + str(workout.id),
                                     headers=self.headers_sent, data=json.dumps(body_to_send))
-        self.assertEqual(json.loads(res.data), {'error': error_codes.invalid_role})
+        self.assertEqual(json.loads(res.data), {'error': error_codes.empty_data})
+
+    def test_admin_update_workout_date_invalid_data(self):
+        workout = self.list_of_workouts[0]
+        body_to_send = {'date': ''}
+        res = app.test_client().put('/admin/workout/update/' + str(workout.id),
+                                    headers=self.headers_sent, data=json.dumps(body_to_send))
+        self.assertEqual(json.loads(res.data), {'error': error_codes.empty_data})
+
+    def test_admin_update_workout_time_invalid_data(self):
+        workout = self.list_of_workouts[0]
+        body_to_send = {'time': ''}
+        res = app.test_client().put('/admin/workout/update/' + str(workout.id),
+                                    headers=self.headers_sent, data=json.dumps(body_to_send))
+        self.assertEqual(json.loads(res.data), {'error': error_codes.empty_data})
+
+    def test_admin_update_workout_time_and_date_invalid_data(self):
+        workout = self.list_of_workouts[0]
+        body_to_send = {'time': '11:50', 'date': ''}
+        res = app.test_client().put('/admin/workout/update/' + str(workout.id),
+                                    headers=self.headers_sent, data=json.dumps(body_to_send))
+        self.assertEqual(json.loads(res.data), {'error': error_codes.empty_data})
+
+    def test_admin_update_workout_no_such_workout(self):
+        wrong_workout_id = 'thisisnotalegalworkoutid'
+        body_to_send = {'time': '11:50'}
+        res = app.test_client().put('/admin/workout/update/' + wrong_workout_id,
+                                    headers=self.headers_sent, data=json.dumps(body_to_send))
+        self.assertEqual(json.loads(res.data), {'error': error_codes.no_such_workout})
+
 
 
 if __name__ == '__main__':

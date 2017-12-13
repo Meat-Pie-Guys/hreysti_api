@@ -22,11 +22,11 @@ class TestApi(unittest.TestCase):
 
     def test_create_user_success(self):
         headers_sent = {'Accept': 'application/json', 'Content-Type': 'application/json'}
-        body_to_send = {'name': 'John Tennis', 'password': '123456', 'ssn': '9123456789'}
+        body_to_send = {'name': 'John Tennis', 'password': '123456', 'ssn': '2310932579'}
         res = app.test_client().post('/user', headers=headers_sent, data=json.dumps(body_to_send))
         self.assertEqual(200, res.status_code)
         self.assertEqual(json.loads(res.data), {'error': error_codes.no_error})
-        self.assertEqual(db.session.query(User.name).filter_by(ssn='9123456789').first()[0], 'John Tennis')
+        self.assertEqual(db.session.query(User.name).filter_by(ssn='2310932579').first()[0], 'John Tennis')
 
 
     def test_create_user_missing_data(self):
@@ -65,7 +65,7 @@ class TestApi(unittest.TestCase):
 
     def test_create_user_invalid_password(self):
         headers_sent = {'Accept': 'application/json', 'Content-Type': 'application/json'}
-        body_to_send = {'name': 'John Tennis', 'password': 'X', 'ssn': '9123456789'}
+        body_to_send = {'name': 'John Tennis', 'password': 'X', 'ssn': '1002873319'}
         res = app.test_client().post('/user', headers=headers_sent, data=json.dumps(body_to_send))
         self.assertEqual(json.loads(res.data), {'error': error_codes.invalid_password})
 

@@ -164,9 +164,8 @@ def remove_user_by_id(curr_user, user_id):
         return jsonify({'error': error_codes.no_such_user}), 400
     if del_user.user_role == 'Admin':
         return jsonify({'error': error_codes.access_denied}), 403
-    for workout in del_user.workouts:
-        del_user.workouts.remove(workout)
-        db.session.commit()
+    del_user.workouts = []
+    db.session.commit()
     db.session.delete(del_user)
     db.session.commit()
     return jsonify({'error': error_codes.no_error})

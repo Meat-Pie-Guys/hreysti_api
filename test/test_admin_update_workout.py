@@ -30,6 +30,17 @@ class TestAdminUpdateWorkout(unittest.TestCase):
             'fenrir-token': valid_token
         }
 
+        invalid_valid_token = jwt.encode(
+            {'open_id': self.list_of_users[0].open_id, 'exp': expire_time},
+            app.config['SECRET_KEY'],
+            algorithm='HS256'
+        )
+        self.invalid_headers_sent = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'fenrir-token': invalid_valid_token
+        }
+
     def tearDown(self):
         db.drop_all()
 
@@ -40,6 +51,14 @@ class TestAdminUpdateWorkout(unittest.TestCase):
                                     headers=self.headers_sent, data=json.dumps(body_to_send))
         self.assertEqual(200, res.status_code)
         self.assertEqual(json.loads(res.data), {'error': error_codes.no_error})
+
+    def test_admin_update_workout_access_denied(self):
+        workout = self.list_of_workouts[0]
+        body_to_send = {'role': 'Coach'}
+        res = app.test_client().put('/admin/workout/update/' + str(workout.id),
+                                    headers=self.invalid_headers_sent, data=json.dumps(body_to_send))
+        self.assertEqual(403, res.status_code)
+        self.assertEqual(json.loads(res.data), {'error': error_codes.access_denied})
 
     def test_admin_update_workout_missing_data(self):
         workout = self.list_of_workouts[0]

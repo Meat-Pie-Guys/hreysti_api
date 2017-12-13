@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5f1219f-7920-4c46-9f11-d69524c246e1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/fenrir.db" afterPath="$PROJECT_DIR$/db/fenrir.db" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/test.db" afterPath="$PROJECT_DIR$/db/test.db" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api.py" afterPath="$PROJECT_DIR$/src/api.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/test_admin_update_user.py" afterPath="$PROJECT_DIR$/test/test_admin_update_user.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/test_admin_update_workout.py" afterPath="$PROJECT_DIR$/test/test_admin_update_workout.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -54,16 +52,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="test_get_all_none_clientss.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/test_get_all_none_clientss.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1559">
-              <caret line="89" column="33" lean-forward="true" selection-start-line="89" selection-start-column="33" selection-end-line="89" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="api.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/api.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -76,11 +64,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_admin_update_user.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test/test_admin_update_user.py">
+      <file leaf-file-name="test_admin_update_workout.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/test_admin_update_workout.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="94" column="40" lean-forward="true" selection-start-line="94" selection-start-column="40" selection-end-line="94" selection-end-column="40" />
+            <state relative-caret-position="420">
+              <caret line="59" column="34" lean-forward="false" selection-start-line="59" selection-start-column="34" selection-end-line="59" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_get_workouts_by_date.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/test_get_workouts_by_date.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="325">
+              <caret line="47" column="20" lean-forward="true" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_get_coach_workouts_by_date.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/test_get_coach_workouts_by_date.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="439">
+              <caret line="80" column="0" lean-forward="true" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -89,8 +97,8 @@
       <file leaf-file-name="fake_data.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/util/fake_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="86" column="35" lean-forward="false" selection-start-line="86" selection-start-column="35" selection-end-line="86" selection-end-column="35" />
+            <state relative-caret-position="1071">
+              <caret line="102" column="35" lean-forward="true" selection-start-line="102" selection-start-column="35" selection-end-line="102" selection-end-column="35" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -157,7 +165,6 @@
         <option value="$PROJECT_DIR$/src/error_codes.py" />
         <option value="$PROJECT_DIR$/test/test_create_workout.py" />
         <option value="$PROJECT_DIR$/test/test_update_user_name.py" />
-        <option value="$PROJECT_DIR$/test/test_admin_update_workout.py" />
         <option value="$PROJECT_DIR$/test/test_create_user.py" />
         <option value="$PROJECT_DIR$/test/test_home.py" />
         <option value="$PROJECT_DIR$/test/test_login.py" />
@@ -166,11 +173,12 @@
         <option value="$PROJECT_DIR$/test/test_get_all.py" />
         <option value="$PROJECT_DIR$/test/test_participate_in_workout.py" />
         <option value="$PROJECT_DIR$/test/test_get_workouts_by_date.py" />
-        <option value="$PROJECT_DIR$/test/test_get_coach_workouts_by_date.py" />
         <option value="$PROJECT_DIR$/test/test_get_all_none_clientss.py" />
         <option value="$PROJECT_DIR$/test/util/fake_data.py" />
         <option value="$PROJECT_DIR$/src/api.py" />
         <option value="$PROJECT_DIR$/test/test_admin_update_user.py" />
+        <option value="$PROJECT_DIR$/test/test_admin_update_workout.py" />
+        <option value="$PROJECT_DIR$/test/test_get_coach_workouts_by_date.py" />
       </list>
     </option>
   </component>
@@ -181,10 +189,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-476" />
-    <option name="y" value="257" />
-    <option name="width" value="2415" />
-    <option name="height" value="1102" />
+    <option name="x" value="1551" />
+    <option name="y" value="99" />
+    <option name="width" value="1932" />
+    <option name="height" value="882" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -281,8 +289,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_upgrade_user_invalid_expire_date">
-    <configuration name="Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_update_user_access_denied" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.Unittests in test">
+    <configuration name="Unittests for test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_user_access_denied" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
@@ -293,10 +301,10 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="database" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_admin_update_user.TestAdminUpdateUser.test_admin_update_user_access_denied&quot;" />
+      <option name="_new_target" value="&quot;test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_user_access_denied&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
     </configuration>
-    <configuration name="Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_update_user_no_such_user" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_workout_access_denied" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
@@ -307,10 +315,10 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="database" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_admin_update_user.TestAdminUpdateUser.test_admin_update_user_no_such_user&quot;" />
+      <option name="_new_target" value="&quot;test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_workout_access_denied&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
     </configuration>
-    <configuration name="Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_upgrade_user_invalid_expire_date" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
@@ -321,7 +329,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="database" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_admin_update_user.TestAdminUpdateUser.test_admin_upgrade_user_invalid_expire_date&quot;" />
+      <option name="_new_target" value="&quot;test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
     </configuration>
     <configuration name="Unittests for test_remove_user_by_id.TestRemoveUserById.test_remove_user_that_does_not_exist" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
@@ -353,37 +361,34 @@
       <option name="_new_target" value="&quot;$PROJECT_DIR$/test&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
     </configuration>
-    <configuration name="api" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="Unittests in test_get_coach_workouts_by_date.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
+      <envs />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="database" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/api.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/test/test_get_coach_workouts_by_date.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in test" />
-      <item index="1" class="java.lang.String" itemvalue="Python.api" />
-      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_update_user_access_denied" />
-      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_update_user_no_such_user" />
-      <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_upgrade_user_invalid_expire_date" />
+      <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests for test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_user_access_denied" />
+      <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests for test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_workout_access_denied" />
+      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests for test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in test_get_coach_workouts_by_date.py" />
+      <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests in test" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_upgrade_user_invalid_expire_date" />
-        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_update_user_no_such_user" />
-        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_update_user_access_denied" />
-        <item index="3" class="java.lang.String" itemvalue="Python.api" />
-        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests in test" />
+        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in test" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in test_get_coach_workouts_by_date.py" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests for test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully" />
+        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests for test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_workout_access_denied" />
+        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests for test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_user_access_denied" />
       </list>
     </recent_temporary>
   </component>
@@ -404,39 +409,39 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_test_admin_update_user_TestAdminUpdateUser_test_admin_update_user_access_denied - 2017.12.13 at 16h 31m 19s.xml">
-      <configuration name="Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_update_user_access_denied" configurationId="tests" />
+    <history-entry file="Unittests_for_test_admin_update_workout_TestAdminUpdateWorkout_test_admin_update_user_access_denied - 2017.12.13 at 16h 41m 36s.xml">
+      <configuration name="Unittests for test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_user_access_denied" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_admin_update_user_TestAdminUpdateUser_test_admin_update_user_access_denied - 2017.12.13 at 16h 32m 15s.xml">
-      <configuration name="Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_update_user_access_denied" configurationId="tests" />
+    <history-entry file="Unittests_for_test_admin_update_workout_TestAdminUpdateWorkout_test_admin_update_workout_access_denied - 2017.12.13 at 16h 42m 10s.xml">
+      <configuration name="Unittests for test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_workout_access_denied" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_admin_update_user_TestAdminUpdateUser_test_admin_update_user_access_denied - 2017.12.13 at 16h 32m 43s.xml">
-      <configuration name="Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_update_user_access_denied" configurationId="tests" />
+    <history-entry file="Unittests_for_test_get_coach_workouts_by_date_TestGetCoachWorkoutsByDate_test_get_coach_workouts_successfully - 2017.12.13 at 16h 47m 15s.xml">
+      <configuration name="Unittests for test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_admin_update_user_TestAdminUpdateUser_test_admin_update_user_no_such_user - 2017.12.13 at 16h 33m 35s.xml">
-      <configuration name="Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_update_user_no_such_user" configurationId="tests" />
+    <history-entry file="Unittests_for_test_get_coach_workouts_by_date_TestGetCoachWorkoutsByDate_test_get_coach_workouts_successfully - 2017.12.13 at 16h 48m 35s.xml">
+      <configuration name="Unittests for test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_admin_update_user_TestAdminUpdateUser_test_admin_upgrade_user_invalid_expire_date - 2017.12.13 at 16h 34m 48s.xml">
-      <configuration name="Unittests for test_admin_update_user.TestAdminUpdateUser.test_admin_upgrade_user_invalid_expire_date" configurationId="tests" />
+    <history-entry file="Unittests_for_test_get_coach_workouts_by_date_TestGetCoachWorkoutsByDate_test_get_coach_workouts_successfully - 2017.12.13 at 16h 52m 08s.xml">
+      <configuration name="Unittests for test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test - 2017.12.13 at 12h 14m 33s.xml">
-      <configuration name="Unittests in test" configurationId="tests" />
+    <history-entry file="Unittests_for_test_get_coach_workouts_by_date_TestGetCoachWorkoutsByDate_test_get_coach_workouts_successfully - 2017.12.13 at 16h 53m 00s.xml">
+      <configuration name="Unittests for test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_admin_update_user_py - 2017.12.13 at 12h 13m 12s.xml">
-      <configuration name="Unittests in test_admin_update_user.py" configurationId="tests" />
+    <history-entry file="Unittests_in_test_get_coach_workouts_by_date_py - 2017.12.13 at 16h 53m 50s.xml">
+      <configuration name="Unittests in test_get_coach_workouts_by_date.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_admin_update_workout_py - 2017.12.13 at 12h 13m 00s.xml">
-      <configuration name="Unittests in test_admin_update_workout.py" configurationId="tests" />
+    <history-entry file="Unittests_in_test_get_coach_workouts_by_date_py - 2017.12.13 at 16h 54m 06s.xml">
+      <configuration name="Unittests in test_get_coach_workouts_by_date.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_create_user_py - 2017.12.13 at 12h 12m 44s.xml">
-      <configuration name="Unittests in test_create_user.py" configurationId="tests" />
+    <history-entry file="Unittests_in_test_get_coach_workouts_by_date_py - 2017.12.13 at 16h 54m 12s.xml">
+      <configuration name="Unittests in test_get_coach_workouts_by_date.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_create_workout_py - 2017.12.13 at 12h 12m 30s.xml">
-      <configuration name="Unittests in test_create_workout.py" configurationId="tests" />
+    <history-entry file="Unittests_in_test_get_coach_workouts_by_date_py - 2017.12.13 at 16h 54m 47s.xml">
+      <configuration name="Unittests in test_get_coach_workouts_by_date.py" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.203125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -444,7 +449,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32543105" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33114034" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32543105" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -667,16 +672,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_admin_update_workout.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="52" column="26" lean-forward="false" selection-start-line="52" selection-start-column="26" selection-end-line="52" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#15#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/test_get_all.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="320">
@@ -693,14 +688,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_get_workouts_by_date.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="52" column="17" lean-forward="true" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/test_get_user.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="741">
@@ -708,14 +695,6 @@
           <folding>
             <element signature="e#0#15#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_get_coach_workouts_by_date.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="69" column="32" lean-forward="false" selection-start-line="69" selection-start-column="32" selection-end-line="69" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -735,13 +714,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/util/fake_data.py">
+    <entry file="file://$PROJECT_DIR$/test/test_admin_update_user.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="86" column="35" lean-forward="false" selection-start-line="86" selection-start-column="35" selection-end-line="86" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="108">
+          <caret line="53" column="0" lean-forward="true" selection-start-line="53" selection-start-column="0" selection-end-line="60" selection-end-column="84" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -755,10 +732,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_admin_update_user.py">
+    <entry file="file://$PROJECT_DIR$/test/test_get_workouts_by_date.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="94" column="40" lean-forward="true" selection-start-line="94" selection-start-column="40" selection-end-line="94" selection-end-column="40" />
+        <state relative-caret-position="325">
+          <caret line="47" column="20" lean-forward="true" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/util/fake_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1071">
+          <caret line="102" column="35" lean-forward="true" selection-start-line="102" selection-start-column="35" selection-end-line="102" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_get_coach_workouts_by_date.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="439">
+          <caret line="80" column="0" lean-forward="true" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_admin_update_workout.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="59" column="34" lean-forward="false" selection-start-line="59" selection-start-column="34" selection-end-line="59" selection-end-column="34" />
           <folding />
         </state>
       </provider>

@@ -56,9 +56,9 @@ def authenticated(fun):
             curr_user = User.query.filter_by(open_id=data['open_id']).first()
             if curr_user:
                 return fun(curr_user, *args, **kwargs)
-            return jsonify({'error': error_codes.no_such_user}), 402
+            return jsonify({'error': error_codes.no_such_user}), 401
         except jwt.DecodeError:
-            return jsonify({'error': error_codes.invalid_token}), 403
+            return jsonify({'error': error_codes.invalid_token}), 401
 
     return decorated
 
@@ -84,16 +84,16 @@ def create_user():
     """
     data = request.get_json()
     if any(k not in data for k in ('name', 'password', 'ssn')):
-        return jsonify({'error': error_codes.missing_data}), 404
+        return jsonify({'error': error_codes.missing_data}), 400
     name, pw, ssn = data['name'], data['password'], data['ssn']
     if len(name) == 0 or len(pw) == 0 or len(ssn) == 0:
-        return jsonify({'error': error_codes.empty_data}), 405
+        return jsonify({'error': error_codes.empty_data}), 400
     if not valid_password(pw):
-        return jsonify({'error': error_codes.invalid_password}), 406
+        return jsonify({'error': error_codes.invalid_password}), 400
     if not is_valid(ssn):
-        return jsonify({'error': error_codes.invalid_ssn}), 407
+        return jsonify({'error': error_codes.invalid_ssn}), 400
     if db.session.query(User.id).filter_by(ssn=ssn).scalar() is not None:
-        return jsonify({'error': error_codes.user_already_exists}), 408
+        return jsonify({'error': error_codes.user_already_exists}), 400
     pw = generate_password_hash(pw, method='sha256')
     db.session.add(User(open_id=str(uuid.uuid4()), name=name, ssn=ssn, password=pw))
     db.session.commit()
@@ -110,10 +110,10 @@ def login():
     """
     auth = request.authorization
     if not auth or not auth.username or not auth.password:
-        return jsonify({'error': error_codes.missing_header_fields}), 404
+        return jsonify({'error': error_codes.missing_header_fields}), 401
     user = User.query.filter_by(ssn=auth.username).first()
     if not user or not check_password_hash(user.password, auth.password):
-        return jsonify({'error': error_codes.invalid_credentials}), 405
+        return jsonify({'error': error_codes.invalid_credentials}), 403
     expire_time = datetime.datetime.utcnow() + datetime.timedelta(weeks=50)
     token = jwt.encode({'open_id': user.open_id, 'exp': expire_time}, app.config['SECRET_KEY'], algorithm='HS256')
     return jsonify(
@@ -136,10 +136,10 @@ def update_user_name(curr_user):
     """
     data = request.get_json()
     if 'name' not in data:
-        return jsonify({'error': error_codes.missing_data}), 401
+        return jsonify({'error': error_codes.missing_data}), 400
     name = data['name']
     if len(name) == 0:
-        return jsonify({'error': error_codes.empty_data}), 405
+        return jsonify({'error': error_codes.empty_data}), 400
     curr_user.name = name
     db.session.commit()
     return jsonify({'error': error_codes.no_error})
@@ -158,12 +158,12 @@ def remove_user_by_id(curr_user, user_id):
     :return: error code (= 0 if none)
     """
     if curr_user.user_role != 'Admin':
-        return jsonify({'error': error_codes.access_denied}), 434
+        return jsonify({'error': error_codes.access_denied}), 403
     del_user = User.query.filter_by(open_id=user_id).first()
     if not del_user:
-        return jsonify({'error': error_codes.no_such_user}), 444
+        return jsonify({'error': error_codes.no_such_user}), 400
     if del_user.user_role == 'Admin':
-        return jsonify({'error': error_codes.access_denied}), 421
+        return jsonify({'error': error_codes.access_denied}), 403
     db.session.delete(del_user)
     db.session.commit()
     return jsonify({'error': error_codes.no_error})
@@ -204,23 +204,23 @@ def admin_update_user(curr_user, user_id):
     :return: error code (= 0 if none)
     """
     if curr_user.user_role != 'Admin':
-        return jsonify({'error': error_codes.access_denied}), 434
+        return jsonify({'error': error_codes.access_denied}), 403
     update_user = User.query.filter_by(open_id=user_id).first()
     if not update_user:
-        return jsonify({'error': error_codes.no_such_user}), 444
+        return jsonify({'error': error_codes.no_such_user}), 400
     data = request.get_json()
     if 'expire_date' not in data and 'role' not in data:
-        return jsonify({'error': error_codes.missing_data}), 452
+        return jsonify({'error': error_codes.missing_data}), 400
     if 'expire_date' in data:
         if len(data['expire_date']) == 0:
-            return jsonify({'error': error_codes.empty_data}), 405
+            return jsonify({'error': error_codes.empty_data}), 400
         update_user.expire_date = datetime.datetime(
             *tuple(map(int, list(reversed(data['expire_date'].split('/'))) + ['23', '59'])))
     if 'role' in data:
         if len(data['role']) == 0:
-            return jsonify({'error': error_codes.empty_data}), 405
+            return jsonify({'error': error_codes.empty_data}), 400
         if not valid_role(data['role']):
-            return jsonify({'error': error_codes.invalid_role}), 405
+            return jsonify({'error': error_codes.invalid_role}), 400
         update_user.user_role = data['role']
     db.session.commit()
     return jsonify({'error': error_codes.no_error})
@@ -239,7 +239,7 @@ def get_all_users(curr_user):
     for all of the Users in the database
     """
     if curr_user.user_role != 'Admin':
-        return jsonify({'error': error_codes.access_denied}), 462
+        return jsonify({'error': error_codes.access_denied}), 403
     return jsonify({
         'error': error_codes.no_error,
         'all_users': [{
@@ -265,31 +265,31 @@ def create_workout(curr_user):
     """
     data = request.get_json()
     if curr_user.user_role == 'Client':
-        return jsonify({'error': error_codes.access_denied}), 462
+        return jsonify({'error': error_codes.access_denied}), 403
     if 'coach_id' not in data or 'description' not in data or 'date' not in data or 'time' not in data:
-        return jsonify({'error': error_codes.missing_data}), 461
+        return jsonify({'error': error_codes.missing_data}), 400
     coach_id = data['coach_id']
     desc = data['description']
     if 'coach_id' in data:
         if len(data['coach_id']) == 0:
-            return jsonify({'error': error_codes.empty_data}), 405
+            return jsonify({'error': error_codes.empty_data}), 400
     if 'description' in data:
         if len(data['description']) == 0:
-            return jsonify({'error': error_codes.empty_data}), 405
+            return jsonify({'error': error_codes.empty_data}), 400
     if 'date' in data:
         if len(data['date']) == 0:
-            return jsonify({'error': error_codes.empty_data}), 405
+            return jsonify({'error': error_codes.empty_data}), 400
     if 'time' in data:
         if len(data['time']) == 0:
-            return jsonify({'error': error_codes.empty_data}), 405
+            return jsonify({'error': error_codes.empty_data}), 400
     the_date = datetime.datetime(
         *tuple(map(int, list(reversed(data['date'].split('/'))) + data['time'].split(':'))))
     if Workout.query.filter_by(date_time=the_date).first() is not None:
-        return jsonify({'error': error_codes.workout_already_exists}), 498
+        return jsonify({'error': error_codes.workout_already_exists}), 400
     the_coach = User.query.filter_by(open_id=coach_id).first()
     if the_coach.user_role != 'Coach':
         if the_coach.user_role != 'Admin':
-            return jsonify({'error': error_codes.access_denied}), 496
+            return jsonify({'error': error_codes.access_denied}), 403
     db.session.add(Workout(coach_id=coach_id, date_time=datetime.datetime(
         *tuple(map(int, list(reversed(data['date'].split('/'))) + data['time'].split(':')))), description=desc))
     db.session.commit()
@@ -310,7 +310,7 @@ def get_all_none_clientss(curr_user):
     for all of the non-Client Users in the database
     """
     if curr_user.user_role == 'Client':
-        return jsonify({'error': error_codes.access_denied}), 462
+        return jsonify({'error': error_codes.access_denied}), 403
     return jsonify({
         'error': error_codes.no_error,
         'all_users': [{
@@ -339,7 +339,7 @@ def get_workout(curr_user, workout_date_time):
     workout_got = Workout.query.filter_by(date_time=datetime.datetime(
         *tuple(map(int, list((workout_date_time.split('-'))))))).first()
     if workout_got is None:
-        return jsonify({'error': error_codes.invalid_date_time}), 487
+        return jsonify({'error': error_codes.invalid_date_time}), 400
     return jsonify(
         {
             'error': error_codes.no_error,
@@ -395,19 +395,19 @@ def participate_in_workout(curr_user, workout_id):
     """
     work = Workout.query.filter_by(id=workout_id).first()
     if work is None:
-        return jsonify({'error': error_codes.no_such_workout}), 431
+        return jsonify({'error': error_codes.no_such_workout}), 400
     x = User.query.join(Workout.users).filter(Workout.id == workout_id).filter(User.id == curr_user.id).first()
     if db.session.query(Workout).join(Workout.users).filter(
                     Workout.id == work.id).count() > 11:
-        return jsonify({'error': error_codes.workout_is_full})
+        return jsonify({'error': error_codes.workout_is_full}), 400
     if x is not None:
         curr_user.workouts.remove(work)
         db.session.commit()
-        return jsonify({'error': error_codes.no_error, 'message:': 'removed'})
+        return jsonify({'error': error_codes.no_error, 'message': 'removed'})
     else:
         curr_user.workouts.append(work)
         db.session.commit()
-        return jsonify({'error': error_codes.no_error, 'message:': 'attended'})
+        return jsonify({'error': error_codes.no_error, 'message': 'attended'})
 
 
 @app.route('/admin/workout/update/<workout_id>', methods=['PUT'])
@@ -420,35 +420,35 @@ def admin_update_workout(curr_user, workout_id):
     :return: error code (= 0 if none)
     """
     if curr_user.user_role != 'Admin':
-        return jsonify({'error': error_codes.access_denied}), 434
+        return jsonify({'error': error_codes.access_denied}), 403
     update_workout = Workout.query.filter_by(id=workout_id).first()
     if not update_workout:
-        return jsonify({'error': error_codes.no_such_workout}), 494
+        return jsonify({'error': error_codes.no_such_workout}), 400
     data = request.get_json()
     if 'coach_id' not in data and 'description' not in data and 'date' not in data and 'time' not in data:
-        return jsonify({'error': error_codes.missing_data}), 452
+        return jsonify({'error': error_codes.missing_data}), 400
     if 'coach_id' in data:
         if len(data['coach_id']) == 0:
-            return jsonify({'error': error_codes.empty_data}), 405
+            return jsonify({'error': error_codes.empty_data}), 400
         update_workout.coach_id = data['coach_id']
     if 'description' in data:
         if len(data['description']) == 0:
-            return jsonify({'error': error_codes.empty_data}), 406
+            return jsonify({'error': error_codes.empty_data}), 400
         update_workout.description = data['description']
     if 'date' in data and 'time' in data:
         if len(data['date']) == 0 or len(data['time']) == 0:
-            return jsonify({'error': error_codes.empty_data}), 407
+            return jsonify({'error': error_codes.empty_data}), 400
         update_workout.date_time = datetime.datetime(*tuple(map(int, list(
             reversed(data['date'].split('/'))) + data['time'].split(':'))))
     if 'date' in data and 'time' not in data:
         if len(data['date']) == 0:
-            return jsonify({'error': error_codes.empty_data}), 408
+            return jsonify({'error': error_codes.empty_data}), 400
         old_time = update_workout.date_time.strftime('%H:%M')
         update_workout.date_time = datetime.datetime(*tuple(map(int, list(reversed(
             data['date'].split('/'))) + list(old_time.split(':')))))
     if 'time' in data and 'date' not in data:
         if len(data['time']) == 0:
-            return jsonify({'error': error_codes.empty_data}), 409
+            return jsonify({'error': error_codes.empty_data}), 400
         old_date = update_workout.date_time.strftime('%Y/%m/%d')
         update_workout.date_time = datetime.datetime(*tuple(map(int, list(
             old_date.split('/')) + data['time'].split(':'))))
@@ -469,7 +469,7 @@ def get_coach_workouts_by_date(curr_user, workout_date_time):
     of the workouts at the date that was sent in
     """
     if curr_user.user_role == 'Client':
-        return jsonify({'error': error_codes.access_denied}), 421
+        return jsonify({'error': error_codes.access_denied}), 403
     all_work = Workout.query.all()
     lis = []
     for workout in all_work:

@@ -49,7 +49,7 @@ class TestGetWorkoutsByDate(unittest.TestCase):
 
     def test_get_workout_unsuccessfully(self):
         res = app.test_client().get('/workout/today/' + '2017-11-30-08-15-00', headers=self.headers_sent)
-        self.assertEqual(487, res.status_code)
+        self.assertEqual(400, res.status_code)
         self.assertEqual(json.loads(res.data), {'error': error_codes.invalid_date_time })
 
 

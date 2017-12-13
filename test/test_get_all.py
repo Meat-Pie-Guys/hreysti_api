@@ -110,7 +110,7 @@ class TestGetAll(unittest.TestCase):
 
     def test_get_all_users_as_non_admin_unsuccessfully(self):
         res = app.test_client().get('/user/all', headers=self.headers_sent2)
-        self.assertEqual(462, res.status_code)
+        self.assertEqual(403, res.status_code)
         self.assertEqual(json.loads(res.data), {'error': error_codes.access_denied})
 
 

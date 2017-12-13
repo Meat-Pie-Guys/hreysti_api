@@ -87,7 +87,7 @@ class TestGetAllNoneClients(unittest.TestCase):
 
     def test_get_all_non_clients_as_admin_unsuccessfully(self):
         res = app.test_client().get('/user/coaches', headers=self.headers_sent2)
-        self.assertEqual(462, res.status_code)
+        self.assertEqual(403, res.status_code)
         self.assertEqual(json.loads(res.data), {'error': error_codes.access_denied})
 
 

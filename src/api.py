@@ -32,7 +32,7 @@ class User(db.Model):
     user_role = db.Column(db.String(12), primary_key=False, nullable=False, default='Client')
     start_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
     expire_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
-    workouts = db.relationship('Workout', secondary=participates, cascade="all,delete", lazy='dynamic',
+    workouts = db.relationship('Workout', secondary=participates, lazy='dynamic',
                                backref=db.backref('workouts', lazy='dynamic'))
 
 
@@ -41,7 +41,7 @@ class Workout(db.Model):
     coach_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     date_time = db.Column(db.DateTime(), unique=True, nullable=False)
     description = db.Column(db.Text, primary_key=False, nullable=False)
-    users = db.relationship('User', secondary=participates, cascade="all,delete", lazy='dynamic',
+    users = db.relationship('User', secondary=participates, lazy='dynamic',
                             backref=db.backref('users', lazy='dynamic'))
 
 
@@ -164,6 +164,9 @@ def remove_user_by_id(curr_user, user_id):
         return jsonify({'error': error_codes.no_such_user}), 400
     if del_user.user_role == 'Admin':
         return jsonify({'error': error_codes.access_denied}), 403
+    for workout in del_user.workouts:
+        del_user.workouts.remove(workout)
+        db.session.commit()
     db.session.delete(del_user)
     db.session.commit()
     return jsonify({'error': error_codes.no_error})
@@ -488,4 +491,6 @@ def get_coach_workouts_by_date(curr_user, workout_date_time):
 
 
 if __name__ == '__main__':
+    #db.drop_all()
+    #db.create_all()
     app.run()

@@ -29,6 +29,17 @@ class TestAdminUpdateUser(unittest.TestCase):
             'Content-Type': 'application/json',
             'fenrir-token': valid_token
         }
+        invalid_valid_token = jwt.encode(
+            {'open_id': self.list_of_users[0].open_id, 'exp': expire_time},
+            app.config['SECRET_KEY'],
+            algorithm='HS256'
+        )
+        self.invalid_headers_sent = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'fenrir-token': invalid_valid_token
+        }
+
 
     def tearDown(self):
         db.drop_all()
@@ -40,6 +51,22 @@ class TestAdminUpdateUser(unittest.TestCase):
                                     headers=self.headers_sent, data=json.dumps(body_to_send))
         self.assertEqual(200, res.status_code)
         self.assertEqual(json.loads(res.data), {'error': error_codes.no_error})
+
+    def test_admin_update_user_access_denied(self):
+        tmp_oid = self.list_of_users[0].open_id
+        body_to_send = {'role': 'Coach'}
+        res = app.test_client().put('/admin/user/name/update/' + tmp_oid,
+                                    headers=self.invalid_headers_sent, data=json.dumps(body_to_send))
+        self.assertEqual(403, res.status_code)
+        self.assertEqual(json.loads(res.data), {'error': error_codes.access_denied})
+
+    def test_admin_update_user_no_such_user(self):
+        tmp_oid = self.list_of_users[0].open_id
+        body_to_send = {'role': 'Coach'}
+        res = app.test_client().put('/admin/user/name/update/' + 'notauserid',
+                                    headers=self.headers_sent, data=json.dumps(body_to_send))
+        self.assertEqual(400, res.status_code)
+        self.assertEqual(json.loads(res.data), {'error': error_codes.no_such_user})
 
     def test_admin_update_user_name_missing_data(self):
         tmp_oid = self.list_of_users[0].open_id
@@ -61,6 +88,14 @@ class TestAdminUpdateUser(unittest.TestCase):
         res = app.test_client().put('/admin/user/name/update/' + tmp_oid,
                                     headers=self.headers_sent, data=json.dumps(body_to_send))
         self.assertEqual(json.loads(res.data), {'error': error_codes.invalid_role})
+
+    def test_admin_upgrade_user_invalid_expire_date(self):
+        tmp_oid = self.list_of_users[0].open_id
+        body_to_send = {'expire_date': ''}
+        res = app.test_client().put('/admin/user/name/update/' + tmp_oid,
+                                    headers=self.headers_sent, data=json.dumps(body_to_send))
+        self.assertEqual(400, res.status_code)
+        self.assertEqual(json.loads(res.data), {'error': error_codes.empty_data})
 
 
 if __name__ == '__main__':

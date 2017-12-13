@@ -35,12 +35,23 @@ class TestGetWorkoutsByDate(unittest.TestCase):
 
     def test_get_workout_successfully(self):
         workout = self.list_of_workouts[0]
-        res = app.test_client().get('/workout/all/1', headers=self.headers_sent)
+        res = app.test_client().get('/workout/today/' + '2017-11-30-08-00-00', headers=self.headers_sent)
         self.assertEqual(200, res.status_code)
         self.assertEqual(json.loads(res.data), {'error': error_codes.no_error,
-                                                'user': {'expire_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
-                                                         'id': user.id,
-                                                         'name': user.name,
-                                                         'open_id': user.open_id,
-                                                         'ssn': user.ssn,
-                                                         'start_date': 'Thu, 07 Dec 2017 10:36:00 GMT'}})
+                                                'workout':
+                                                    {
+                                                        'id': workout.id,
+                                                        'coach_id': workout.coach_id,
+                                                        'description': workout.description,
+                                                        'date_time': 'Thu, 30 Nov 2017 08:00:00 GMT',
+                                                    }
+                                                })
+
+    def test_get_workout_unsuccessfully(self):
+        res = app.test_client().get('/workout/today/' + '2017-11-30-08-15-00', headers=self.headers_sent)
+        self.assertEqual(487, res.status_code)
+        self.assertEqual(json.loads(res.data), {'error': error_codes.invalid_date_time })
+
+
+if __name__ == '__main__':
+    unittest.main()

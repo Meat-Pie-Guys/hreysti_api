@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from src import error_codes
-from src.validator import valid_password, valid_ssn
+from src.validator import valid_password, is_valid, valid_role
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '>kz9q>GnW<>~_.7,8cw_-/xA'
@@ -90,7 +90,7 @@ def create_user():
         return jsonify({'error': error_codes.empty_data}), 405
     if not valid_password(pw):
         return jsonify({'error': error_codes.invalid_password}), 406
-    if not valid_ssn(ssn):
+    if not is_valid(ssn):
         return jsonify({'error': error_codes.invalid_ssn}), 407
     if db.session.query(User.id).filter_by(ssn=ssn).scalar() is not None:
         return jsonify({'error': error_codes.user_already_exists}), 408
@@ -214,12 +214,14 @@ def admin_update_user(curr_user, user_id):
     if 'expire_date' in data:
         if len(data['expire_date']) == 0:
             return jsonify({'error': error_codes.empty_data}), 405
+        update_user.expire_date = datetime.datetime(
+            *tuple(map(int, list(reversed(data['expire_date'].split('/'))) + ['23', '59'])))
     if 'role' in data:
         if len(data['role']) == 0:
             return jsonify({'error': error_codes.empty_data}), 405
-    update_user.expire_date = datetime.datetime(
-        *tuple(map(int, list(reversed(data['expire_date'].split('/'))) + ['23', '59'])))
-    update_user.user_role = data['role']
+        if not valid_role(data['role']):
+            return jsonify({'error': error_codes.invalid_role}), 405
+        update_user.user_role = data['role']
     db.session.commit()
     return jsonify({'error': error_codes.no_error})
 
@@ -280,6 +282,10 @@ def create_workout(curr_user):
     if 'time' in data:
         if len(data['time']) == 0:
             return jsonify({'error': error_codes.empty_data}), 405
+    the_date = datetime.datetime(
+        *tuple(map(int, list(reversed(data['date'].split('/'))) + data['time'].split(':'))))
+    if Workout.query.filter_by(date_time=the_date).first() is not None:
+        return jsonify({'error': error_codes.workout_already_exists}), 498
     the_coach = User.query.filter_by(open_id=coach_id).first()
     if the_coach.user_role != 'Coach':
         if the_coach.user_role != 'Admin':
@@ -391,8 +397,6 @@ def participate_in_workout(curr_user, workout_id):
     if work is None:
         return jsonify({'error': error_codes.no_such_workout}), 431
     x = User.query.join(Workout.users).filter(Workout.id == workout_id).filter(User.id == curr_user.id).first()
-
-    print(x)
     if db.session.query(Workout).join(Workout.users).filter(
                     Workout.id == work.id).count() > 11:
         return jsonify({'error': error_codes.workout_is_full})

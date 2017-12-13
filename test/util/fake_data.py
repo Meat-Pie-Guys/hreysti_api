@@ -2,7 +2,6 @@ import datetime
 import uuid
 
 from werkzeug.security import generate_password_hash
-
 from src.api import User, Workout
 
 

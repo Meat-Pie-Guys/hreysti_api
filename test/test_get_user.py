@@ -41,6 +41,11 @@ class TestGetUser(unittest.TestCase):
                                                 'user': {'expire_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
                                                          'id': user.id,
                                                          'name': user.name,
+                                                         'role': user.user_role,
                                                          'open_id': user.open_id,
                                                          'ssn': user.ssn,
                                                          'start_date': 'Thu, 07 Dec 2017 10:36:00 GMT'}})
+
+
+if __name__ == '__main__':
+    unittest.main()

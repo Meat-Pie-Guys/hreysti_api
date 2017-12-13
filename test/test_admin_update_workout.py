@@ -6,7 +6,7 @@ from src.api import *
 from test.util.fake_data import *
 
 
-class TestAdminUpdateUser(unittest.TestCase):
+class TestAdminUpdateWorkout(unittest.TestCase):
     def setUp(self):
         app.config['SQLALCHEMY_DATABASE_URI'] = TEST_SQLITE_URI
         db.create_all()
@@ -33,25 +33,25 @@ class TestAdminUpdateUser(unittest.TestCase):
     def tearDown(self):
         db.drop_all()
 
-    def test_admin_update_user_role_success(self):
-        tmp_oid = self.list_of_users[0].open_id
-        body_to_send = {'role': 'Coach'}
-        res = app.test_client().put('/admin/user/name/update/' + tmp_oid,
+    def test_admin_update_workout_success(self):
+        workout = self.list_of_workouts[0]
+        body_to_send = {'description': '5 Cock-thrusts and wrestle a bear'}
+        res = app.test_client().put('/admin/workout/update/' + str(workout.id),
                                     headers=self.headers_sent, data=json.dumps(body_to_send))
         self.assertEqual(200, res.status_code)
         self.assertEqual(json.loads(res.data), {'error': error_codes.no_error})
 
-    def test_admin_update_user_name_missing_data(self):
-        tmp_oid = self.list_of_users[0].open_id
+    def test_admin_update_workout_missing_data(self):
+        workout = self.list_of_workouts[0]
         body_to_send = {'A': 'B'}
-        res = app.test_client().put('/admin/user/name/update/' + tmp_oid,
+        res = app.test_client().put('/admin/workout/update/' + str(workout.id),
                                     headers=self.headers_sent, data=json.dumps(body_to_send))
         self.assertEqual(json.loads(res.data), {'error': error_codes.missing_data})
 
-    def test_admin_upgrade_user_role_invalid_data(self):
-        tmp_oid = self.list_of_users[0].open_id
-        body_to_send = {'role': ''}
-        res = app.test_client().put('/admin/user/name/update/' + tmp_oid,
+    def test_admin_upgrade_workout_coach_id_invalid_data(self):
+        workout = self.list_of_workouts[0]
+        body_to_send = {'coach_id': ''}
+        res = app.test_client().put('/admin/workout/update/' + str(workout.id),
                                     headers=self.headers_sent, data=json.dumps(body_to_send))
         self.assertEqual(json.loads(res.data), {'error': error_codes.empty_data})
 

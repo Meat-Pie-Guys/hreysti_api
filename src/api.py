@@ -375,6 +375,7 @@ def get_workouts_by_date(curr_user, workout_date_time):
             the_coach = User.query.filter_by(open_id=workout.coach_id).first()
             dictionary['id'] = workout.id
             dictionary['coach_name'] = the_coach.name
+            dictionary['coach_id'] = workout.coach_id
             dictionary['description'] = workout.description
             dictionary['date_time'] = workout.date_time
             dictionary['attending'] = db.session.query(Workout).join(Workout.users).filter(
@@ -481,6 +482,7 @@ def get_coach_workouts_by_date(curr_user, workout_date_time):
             the_coach = User.query.filter_by(open_id=workout.coach_id).first()
             dictionary['id'] = workout.id
             dictionary['coach_name'] = the_coach.name
+            dictionary['coach_id'] = workout.coach_id
             dictionary['description'] = workout.description
             dictionary['date_time'] = workout.date_time
             dictionary['attending'] = db.session.query(Workout).join(Workout.users).filter(

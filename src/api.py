@@ -421,7 +421,7 @@ def admin_update_workout(curr_user, workout_id):
     :param curr_user: The current session user
     :return: error code (= 0 if none)
     """
-    if curr_user.user_role != 'Admin':
+    if curr_user.user_role == 'Client':
         return jsonify({'error': error_codes.access_denied}), 403
     update_workout = Workout.query.filter_by(id=workout_id).first()
     if not update_workout:
@@ -488,6 +488,30 @@ def get_coach_workouts_by_date(curr_user, workout_date_time):
             lis.append(dictionary)
     return jsonify({'error': error_codes.no_error, 'all_workouts': lis})
 
+
+@app.route('/workout/users/<workout_id>', methods=['GET'])
+@authenticated
+def get_workut_participants(curr_user, workout_id):
+    """
+
+    :param curr_user:
+    :param workout_id:
+    :return: error code (= 0 if none) and the Workout information
+    of the workouts at the date that was sent in
+    """
+    if curr_user.user_role == 'Client':
+        return jsonify({'error': error_codes.access_denied}), 403
+    return jsonify({
+        'error': error_codes.no_error,
+        'all_users': [{
+            'name': user.name,
+            'ssn': user.ssn,
+            'open_id': user.open_id,
+            'user_role': user.user_role,
+            'start_date': user.start_date,
+            'expire_date': user.expire_date
+        } for user in User.query.join(Workout.users).filter(Workout.id == workout_id).all()]
+    })
 
 if __name__ == '__main__':
     #db.drop_all()

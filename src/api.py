@@ -396,6 +396,7 @@ def participate_in_workout(curr_user, workout_id):
     :return: error code (= 0 if none) if the workout does not exist
     then it sends an appropriate error code
     """
+
     work = Workout.query.filter_by(id=workout_id).first()
     if work is None:
         return jsonify({'error': error_codes.no_such_workout}), 400
@@ -493,7 +494,7 @@ def get_coach_workouts_by_date(curr_user, workout_date_time):
 
 @app.route('/workout/users/<workout_id>', methods=['GET'])
 @authenticated
-def get_workut_participants(curr_user, workout_id):
+def get_workout_participants(curr_user, workout_id):
     """
 
     :param curr_user:
@@ -501,6 +502,9 @@ def get_workut_participants(curr_user, workout_id):
     :return: error code (= 0 if none) and the Workout information
     of the workouts at the date that was sent in
     """
+    work = Workout.query.filter_by(id=workout_id).first()
+    if work is None:
+        return jsonify({'error': error_codes.no_such_workout}), 400
     if curr_user.user_role == 'Client':
         return jsonify({'error': error_codes.access_denied}), 403
     return jsonify({

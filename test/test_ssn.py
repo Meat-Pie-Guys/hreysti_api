@@ -43,3 +43,7 @@ class TestIsValid(TestCase):
     def testValid(self):
         for ssn in self.valid:
             self.assertTrue(ssn)
+
+    def testValidCompanySSNToFail(self):
+        self.assertFalse(is_valid('681201-2890'))
+

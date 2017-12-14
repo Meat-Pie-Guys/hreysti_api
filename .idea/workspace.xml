@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5f1219f-7920-4c46-9f11-d69524c246e1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/fenrir.db" afterPath="$PROJECT_DIR$/db/fenrir.db" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/test_get_workout_participants.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/test.db" afterPath="$PROJECT_DIR$/db/test.db" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api.py" afterPath="$PROJECT_DIR$/src/api.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/test_get_all.py" afterPath="$PROJECT_DIR$/test/test_get_all.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/test_participate_in_workout.py" afterPath="$PROJECT_DIR$/test/test_participate_in_workout.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/test_ssn.py" afterPath="$PROJECT_DIR$/test/test_ssn.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/util/fake_data.py" afterPath="$PROJECT_DIR$/test/util/fake_data.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -49,16 +55,76 @@
     <SUITE FILE_PATH="coverage/hreysti_api_tests$Unittests_for_test_update_user_TestUpdateUser.coverage" NAME="Unittests for test_update_user.TestUpdateUser Coverage Results" MODIFIED="1512703779901" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/hreysti_api_tests$Unittests_for_test_update_user_name_TestUpdateUserName_test_upgrade_user_name_invalid_data.coverage" NAME="Unittests for test_update_user_name.TestUpdateUserName.test_upgrade_user_name_invalid_data Coverage Results" MODIFIED="1512704719956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="api.py" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/src/api.py">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="1095">
+                    <caret line="405" column="67" lean-forward="false" selection-start-line="405" selection-start-column="64" selection-end-line="405" selection-end-column="67" />
+                    <folding>
+                      <element signature="e#0#15#0" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="api.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/api.py">
+      <file leaf-file-name="test_participate_in_workout.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/test_participate_in_workout.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="377" column="53" lean-forward="false" selection-start-line="377" selection-start-column="53" selection-end-line="377" selection-end-column="53" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="497">
+              <caret line="66" column="36" lean-forward="false" selection-start-line="66" selection-start-column="36" selection-end-line="66" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_create_workout.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/test_create_workout.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="41" column="7" lean-forward="true" selection-start-line="41" selection-start-column="7" selection-end-line="41" selection-end-column="79" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_get_all.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/test_get_all.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="150" column="33" lean-forward="true" selection-start-line="150" selection-start-column="33" selection-end-line="150" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_get_all_none_clientss.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/test_get_all_none_clientss.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="57" column="44" lean-forward="false" selection-start-line="57" selection-start-column="44" selection-end-line="57" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_ssn.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/test_ssn.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="455">
+              <caret line="46" column="33" lean-forward="false" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -66,8 +132,8 @@
       <file leaf-file-name="fake_data.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/util/fake_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-730">
-              <caret line="50" column="35" lean-forward="false" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="35" />
+            <state relative-caret-position="350">
+              <caret line="160" column="37" lean-forward="false" selection-start-line="160" selection-start-column="37" selection-end-line="160" selection-end-column="37" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -113,6 +179,7 @@
       <find>role</find>
       <find>workout/today</find>
       <find>update_</find>
+      <find>user/coach</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -140,7 +207,6 @@
         <option value="$PROJECT_DIR$/src/datetest.py" />
         <option value="$PROJECT_DIR$/src/test_get_workouts_by_date.py" />
         <option value="$PROJECT_DIR$/src/asdf.py" />
-        <option value="$PROJECT_DIR$/test/test_ssn.py" />
         <option value="$PROJECT_DIR$/src/validator.py" />
         <option value="$PROJECT_DIR$/src/error_codes.py" />
         <option value="$PROJECT_DIR$/test/test_create_workout.py" />
@@ -150,15 +216,18 @@
         <option value="$PROJECT_DIR$/test/test_login.py" />
         <option value="$PROJECT_DIR$/test/test_remove_user_by_id.py" />
         <option value="$PROJECT_DIR$/test/test_get_user.py" />
-        <option value="$PROJECT_DIR$/test/test_get_all.py" />
-        <option value="$PROJECT_DIR$/test/test_participate_in_workout.py" />
         <option value="$PROJECT_DIR$/test/test_get_workouts_by_date.py" />
         <option value="$PROJECT_DIR$/test/test_get_all_none_clientss.py" />
-        <option value="$PROJECT_DIR$/test/util/fake_data.py" />
         <option value="$PROJECT_DIR$/test/test_admin_update_user.py" />
         <option value="$PROJECT_DIR$/test/test_admin_update_workout.py" />
         <option value="$PROJECT_DIR$/test/test_get_coach_workouts_by_date.py" />
+        <option value="$PROJECT_DIR$/src/test_get_workout_participants.py" />
+        <option value="$PROJECT_DIR$/test/test_get_workout_participants.py" />
         <option value="$PROJECT_DIR$/src/api.py" />
+        <option value="$PROJECT_DIR$/test/test_participate_in_workout.py" />
+        <option value="$PROJECT_DIR$/test/test_get_all.py" />
+        <option value="$PROJECT_DIR$/test/util/fake_data.py" />
+        <option value="$PROJECT_DIR$/test/test_ssn.py" />
       </list>
     </option>
   </component>
@@ -169,10 +238,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-89" />
-    <option name="y" value="206" />
-    <option name="width" value="2418" />
-    <option name="height" value="1102" />
+    <option name="x" value="1912" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -269,8 +338,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.api">
-    <configuration name="Unittests for test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_workout_access_denied" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.Unittests in test">
+    <configuration name="Unittests for test_get_all.TestGetAll.test_get_all_users_as_admin_successfully" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
@@ -281,10 +350,10 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="database" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_workout_access_denied&quot;" />
+      <option name="_new_target" value="&quot;test_get_all.TestGetAll.test_get_all_users_as_admin_successfully&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
     </configuration>
-    <configuration name="Unittests for test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_get_all_none_clientss.TestGetAllNoneClients.test_get_all_non_clients_as_admin_successfully" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
@@ -295,7 +364,21 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="database" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully&quot;" />
+      <option name="_new_target" value="&quot;test_get_all_none_clientss.TestGetAllNoneClients.test_get_all_non_clients_as_admin_successfully&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+    </configuration>
+    <configuration name="Unittests for test_participate_in_workout.TestParticipateInWorkout.test_participate_workout_full" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="database" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_participate_in_workout.TestParticipateInWorkout.test_participate_workout_full&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
     </configuration>
     <configuration name="Unittests for test_remove_user_by_id.TestRemoveUserById.test_remove_user_that_does_not_exist" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
@@ -313,6 +396,20 @@
       <option name="_new_target" value="&quot;test_remove_user_by_id.TestRemoveUserById.test_remove_user_that_does_not_exist&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
     </configuration>
+    <configuration name="Unittests for test_ssn.TestIsValid.testInvalidIncorrectDate" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="database" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_ssn.TestIsValid.testInvalidIncorrectDate&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+    </configuration>
     <configuration name="Unittests in test" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -327,51 +424,20 @@
       <option name="_new_target" value="&quot;$PROJECT_DIR$/test&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
     </configuration>
-    <configuration name="Unittests in test_get_coach_workouts_by_date.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="database" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/test/test_get_coach_workouts_by_date.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-    </configuration>
-    <configuration name="api" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="database" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/api.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests for test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_workout_access_denied" />
-      <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests for test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully" />
-      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in test_get_coach_workouts_by_date.py" />
-      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in test" />
-      <item index="4" class="java.lang.String" itemvalue="Python.api" />
+      <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in test" />
+      <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests for test_participate_in_workout.TestParticipateInWorkout.test_participate_workout_full" />
+      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests for test_get_all.TestGetAll.test_get_all_users_as_admin_successfully" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests for test_get_all_none_clientss.TestGetAllNoneClients.test_get_all_non_clients_as_admin_successfully" />
+      <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests for test_ssn.TestIsValid.testInvalidIncorrectDate" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.api" />
-        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in test" />
-        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in test_get_coach_workouts_by_date.py" />
-        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests for test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully" />
-        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests for test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_workout_access_denied" />
+        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in test" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests for test_ssn.TestIsValid.testInvalidIncorrectDate" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests for test_get_all_none_clientss.TestGetAllNoneClients.test_get_all_non_clients_as_admin_successfully" />
+        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests for test_get_all.TestGetAll.test_get_all_users_as_admin_successfully" />
+        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests for test_participate_in_workout.TestParticipateInWorkout.test_participate_workout_full" />
       </list>
     </recent_temporary>
   </component>
@@ -392,39 +458,39 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_test_admin_update_workout_TestAdminUpdateWorkout_test_admin_update_workout_access_denied - 2017.12.13 at 16h 42m 10s.xml">
-      <configuration name="Unittests for test_admin_update_workout.TestAdminUpdateWorkout.test_admin_update_workout_access_denied" configurationId="tests" />
+    <history-entry file="Unittests_for_test_get_all_TestGetAll_test_get_all_users_as_admin_successfully - 2017.12.14 at 20h 27m 37s.xml">
+      <configuration name="Unittests for test_get_all.TestGetAll.test_get_all_users_as_admin_successfully" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_get_coach_workouts_by_date_TestGetCoachWorkoutsByDate_test_get_coach_workouts_successfully - 2017.12.13 at 16h 47m 15s.xml">
-      <configuration name="Unittests for test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully" configurationId="tests" />
+    <history-entry file="Unittests_for_test_get_all_TestGetAll_test_get_all_users_as_admin_successfully - 2017.12.14 at 20h 27m 59s.xml">
+      <configuration name="Unittests for test_get_all.TestGetAll.test_get_all_users_as_admin_successfully" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_get_coach_workouts_by_date_TestGetCoachWorkoutsByDate_test_get_coach_workouts_successfully - 2017.12.13 at 16h 48m 35s.xml">
-      <configuration name="Unittests for test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully" configurationId="tests" />
+    <history-entry file="Unittests_for_test_get_all_TestGetAll_test_get_all_users_as_admin_successfully - 2017.12.14 at 20h 29m 34s.xml">
+      <configuration name="Unittests for test_get_all.TestGetAll.test_get_all_users_as_admin_successfully" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_get_coach_workouts_by_date_TestGetCoachWorkoutsByDate_test_get_coach_workouts_successfully - 2017.12.13 at 16h 52m 08s.xml">
-      <configuration name="Unittests for test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully" configurationId="tests" />
+    <history-entry file="Unittests_for_test_get_all_TestGetAll_test_get_all_users_as_admin_successfully - 2017.12.14 at 20h 30m 03s.xml">
+      <configuration name="Unittests for test_get_all.TestGetAll.test_get_all_users_as_admin_successfully" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_get_coach_workouts_by_date_TestGetCoachWorkoutsByDate_test_get_coach_workouts_successfully - 2017.12.13 at 16h 53m 00s.xml">
-      <configuration name="Unittests for test_get_coach_workouts_by_date.TestGetCoachWorkoutsByDate.test_get_coach_workouts_successfully" configurationId="tests" />
+    <history-entry file="Unittests_for_test_get_all_TestGetAll_test_get_all_users_as_admin_successfully - 2017.12.14 at 20h 30m 28s.xml">
+      <configuration name="Unittests for test_get_all.TestGetAll.test_get_all_users_as_admin_successfully" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test - 2017.12.13 at 16h 57m 02s.xml">
+    <history-entry file="Unittests_for_test_get_all_TestGetAll_test_get_all_users_as_admin_successfully - 2017.12.14 at 20h 31m 09s.xml">
+      <configuration name="Unittests for test_get_all.TestGetAll.test_get_all_users_as_admin_successfully" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_get_all_none_clientss_TestGetAllNoneClients_test_get_all_non_clients_as_admin_successfully - 2017.12.14 at 20h 32m 35s.xml">
+      <configuration name="Unittests for test_get_all_none_clientss.TestGetAllNoneClients.test_get_all_non_clients_as_admin_successfully" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_get_all_none_clientss_TestGetAllNoneClients_test_get_all_non_clients_as_admin_successfully - 2017.12.14 at 20h 32m 53s.xml">
+      <configuration name="Unittests for test_get_all_none_clientss.TestGetAllNoneClients.test_get_all_non_clients_as_admin_successfully" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_ssn_TestIsValid_testInvalidIncorrectDate - 2017.12.14 at 20h 34m 01s.xml">
+      <configuration name="Unittests for test_ssn.TestIsValid.testInvalidIncorrectDate" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_test - 2017.12.14 at 20h 38m 01s.xml">
       <configuration name="Unittests in test" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_test_get_coach_workouts_by_date_py - 2017.12.13 at 16h 53m 50s.xml">
-      <configuration name="Unittests in test_get_coach_workouts_by_date.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_test_get_coach_workouts_by_date_py - 2017.12.13 at 16h 54m 06s.xml">
-      <configuration name="Unittests in test_get_coach_workouts_by_date.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_test_get_coach_workouts_by_date_py - 2017.12.13 at 16h 54m 12s.xml">
-      <configuration name="Unittests in test_get_coach_workouts_by_date.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_test_get_coach_workouts_by_date_py - 2017.12.13 at 16h 54m 47s.xml">
-      <configuration name="Unittests in test_get_coach_workouts_by_date.py" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.203125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -432,7 +498,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32543105" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3366228" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33081895" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -461,7 +527,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/API.py" />
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1629">
@@ -587,13 +652,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_ssn.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/test_remove_user_by_id.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
@@ -619,13 +677,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
           <caret line="25" column="50" lean-forward="false" selection-start-line="25" selection-start-column="50" selection-end-line="25" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_participate_in_workout.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="50" column="31" lean-forward="true" selection-start-line="50" selection-start-column="31" selection-end-line="50" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -671,37 +722,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_get_all.py">
+    <entry file="file://$PROJECT_DIR$/test/test_get_workout_participants.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="664">
-          <caret line="112" column="46" lean-forward="true" selection-start-line="112" selection-start-column="46" selection-end-line="112" selection-end-column="46" />
+        <state relative-caret-position="476">
+          <caret line="85" column="30" lean-forward="false" selection-start-line="85" selection-start-column="30" selection-end-line="85" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_get_all_none_clientss.py">
+    <entry file="file://$PROJECT_DIR$/src/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="853">
-          <caret line="89" column="33" lean-forward="true" selection-start-line="89" selection-start-column="33" selection-end-line="89" selection-end-column="33" />
+        <state relative-caret-position="1095">
+          <caret line="405" column="67" lean-forward="false" selection-start-line="405" selection-start-column="64" selection-end-line="405" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_participate_in_workout.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="66" column="36" lean-forward="false" selection-start-line="66" selection-start-column="36" selection-end-line="66" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/test_create_workout.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="81" column="24" lean-forward="true" selection-start-line="81" selection-start-column="24" selection-end-line="81" selection-end-column="24" />
+        <state relative-caret-position="252">
+          <caret line="41" column="7" lean-forward="true" selection-start-line="41" selection-start-column="7" selection-end-line="41" selection-end-column="79" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/util/fake_data.py">
+    <entry file="file://$PROJECT_DIR$/test/test_get_all.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-730">
-          <caret line="50" column="35" lean-forward="false" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="119">
+          <caret line="150" column="33" lean-forward="true" selection-start-line="150" selection-start-column="33" selection-end-line="150" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -713,13 +772,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/api.py">
+    <entry file="file://$PROJECT_DIR$/test/util/fake_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="377" column="53" lean-forward="false" selection-start-line="377" selection-start-column="53" selection-end-line="377" selection-end-column="53" />
+        <state relative-caret-position="350">
+          <caret line="160" column="37" lean-forward="false" selection-start-line="160" selection-start-column="37" selection-end-line="160" selection-end-column="37" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_get_all_none_clientss.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="57" column="44" lean-forward="false" selection-start-line="57" selection-start-column="44" selection-end-line="57" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_ssn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="455">
+          <caret line="46" column="33" lean-forward="false" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>

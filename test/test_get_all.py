@@ -46,6 +46,7 @@ class TestGetAll(unittest.TestCase):
 
     def test_get_all_users_as_admin_successfully(self):
         res = app.test_client().get('/user/all', headers=self.headers_sent)
+        self.maxDiff = None
         self.assertEqual(200, res.status_code)
         self.assertEqual(json.loads(res.data), {'all_users': [
                                                     {
@@ -103,6 +104,54 @@ class TestGetAll(unittest.TestCase):
                                                         'ssn': self.list_of_users[6].ssn,
                                                         'start_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
                                                         'user_role': self.list_of_users[6].user_role
+                                                    },
+                                                    {
+                                                        'expire_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
+                                                        'name': self.list_of_users[7].name,
+                                                        'open_id': self.list_of_users[7].open_id,
+                                                        'ssn': self.list_of_users[7].ssn,
+                                                        'start_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
+                                                        'user_role': self.list_of_users[7].user_role
+                                                    },
+                                                    {
+                                                        'expire_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
+                                                        'name': self.list_of_users[8].name,
+                                                        'open_id': self.list_of_users[8].open_id,
+                                                        'ssn': self.list_of_users[8].ssn,
+                                                        'start_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
+                                                        'user_role': self.list_of_users[8].user_role
+                                                    },
+                                                    {
+                                                        'expire_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
+                                                        'name': self.list_of_users[9].name,
+                                                        'open_id': self.list_of_users[9].open_id,
+                                                        'ssn': self.list_of_users[9].ssn,
+                                                        'start_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
+                                                        'user_role': self.list_of_users[9].user_role
+                                                    },
+                                                    {
+                                                        'expire_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
+                                                        'name': self.list_of_users[10].name,
+                                                        'open_id': self.list_of_users[10].open_id,
+                                                        'ssn': self.list_of_users[10].ssn,
+                                                        'start_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
+                                                        'user_role': self.list_of_users[10].user_role
+                                                    },
+                                                    {
+                                                        'expire_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
+                                                        'name': self.list_of_users[11].name,
+                                                        'open_id': self.list_of_users[11].open_id,
+                                                        'ssn': self.list_of_users[11].ssn,
+                                                        'start_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
+                                                        'user_role': self.list_of_users[11].user_role
+                                                    },
+                                                    {
+                                                        'expire_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
+                                                        'name': self.list_of_users[12].name,
+                                                        'open_id': self.list_of_users[12].open_id,
+                                                        'ssn': self.list_of_users[12].ssn,
+                                                        'start_date': 'Thu, 07 Dec 2017 10:36:00 GMT',
+                                                        'user_role': self.list_of_users[12].user_role
                                                     }
                                                 ],
                                                 'error': error_codes.no_error,

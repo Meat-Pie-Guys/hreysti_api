@@ -90,7 +90,80 @@ class FakeUsers:
                     start_date=datetime.datetime(2017, 12, 7, 10, 36, 00),
                     expire_date=datetime.datetime(2017, 12, 7, 10, 36, 00)
                 )
+            ),
+            (
+                User(
+                    id=8,
+                    open_id=8,
+                    name='Viddi',
+                    ssn='1111903059',
+                    password=generate_password_hash('abcdef', method='sha256'),
+                    user_role='Client',
+                    start_date=datetime.datetime(2017, 12, 7, 10, 36, 00),
+                    expire_date=datetime.datetime(2017, 12, 7, 10, 36, 00)
+                )
+            ),
+            (
+                User(
+                    id=9,
+                    open_id=9,
+                    name='Hinn Arnar',
+                    ssn='1503943099',
+                    password=generate_password_hash('abcdef', method='sha256'),
+                    user_role='Client',
+                    start_date=datetime.datetime(2017, 12, 7, 10, 36, 00),
+                    expire_date=datetime.datetime(2017, 12, 7, 10, 36, 00)
+                )
+            ),
+            (
+                User(
+                    id=10,
+                    open_id=10,
+                    name='Hoddz',
+                    ssn='0104902359',
+                    password=generate_password_hash('abcdef', method='sha256'),
+                    user_role='Client',
+                    start_date=datetime.datetime(2017, 12, 7, 10, 36, 00),
+                    expire_date=datetime.datetime(2017, 12, 7, 10, 36, 00)
+                )
+            ),
+            (
+                User(
+                    id=11,
+                    open_id=11,
+                    name='Swan',
+                    ssn='0709943569',
+                    password=generate_password_hash('abcdef', method='sha256'),
+                    user_role='Client',
+                    start_date=datetime.datetime(2017, 12, 7, 10, 36, 00),
+                    expire_date=datetime.datetime(2017, 12, 7, 10, 36, 00)
+                )
+            ),
+            (
+                User(
+                    id=12,
+                    open_id=12,
+                    name='Swaglord',
+                    ssn='1602913629',
+                    password=generate_password_hash('abcdef', method='sha256'),
+                    user_role='Client',
+                    start_date=datetime.datetime(2017, 12, 7, 10, 36, 00),
+                    expire_date=datetime.datetime(2017, 12, 7, 10, 36, 00)
+                )
+            ),
+                (
+                User(
+                    id=13,
+                    open_id=13,
+                    name='McSkerp',
+                    ssn='0609605509',
+                    password=generate_password_hash('abcdef', method='sha256'),
+                    user_role='Client',
+                    start_date=datetime.datetime(2017, 12, 7, 10, 36, 00),
+                    expire_date=datetime.datetime(2017, 12, 7, 10, 36, 00)
+                )
             )
+
         ]
 
 
